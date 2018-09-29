@@ -19,7 +19,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.CameraUpdateFactory;
 
-public class ReportActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener { //, LocationListener, GoogleApiClient.ConnectionCallbacks, {
+public class ReportActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, LocationListener, GoogleApiClient.ConnectionCallbacks {
 
     private GoogleMap mMap;
     GoogleApiClient client;
@@ -48,22 +48,21 @@ public class ReportActivity extends AppCompatActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-/*
+
         client = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(this).build();
-        client.connect();*/
+        client.connect();
         // Add a marker in EE building and move the camera
         mMap.setOnMapClickListener(this);
-
+/*
         LatLng CSBldg = new LatLng(36.368299, 127.364844);
         if (currentMarker!=null) {
             currentMarker.remove();
         }
         currentMarker = mMap.addMarker(new MarkerOptions().position(CSBldg).title("Marker in CSBldg"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CSBldg, 17.0f)); // 16.0f~18.0f
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CSBldg, 17.0f)); // 16.0f~18.0f*/
     }
-/*
 
     @Override
     public void onConnectionSuspended(int i) {
@@ -83,16 +82,14 @@ public class ReportActivity extends AppCompatActivity implements OnMapReadyCallb
         if (location == null) {
             Toast.makeText(getApplicationContext(), "location could not be found", Toast.LENGTH_SHORT).show();
         } else {
-            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-            CameraUpdate update = CameraUpdateFactory.newLatLngZoom(latLng, 17.0f);
-            if (currentMarker!=null) {
-                currentMarker.remove();
+            if (currentMarker == null) {
+                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                CameraUpdate update = CameraUpdateFactory.newLatLngZoom(latLng, 17.0f);
+                currentMarker = mMap.addMarker(new MarkerOptions().position(latLng).title("Marker in your current location"));
+                mMap.moveCamera(update);
             }
-            currentMarker = mMap.addMarker(new MarkerOptions().position(latLng).title("Marker in your current location"));
-            mMap.moveCamera(update);
         }
     }
-*/
 
     @Override
     public void onMapClick(LatLng latLng) {
