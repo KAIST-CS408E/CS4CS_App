@@ -29,7 +29,8 @@ public class GeofenceIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         GeofencingEvent geofencingEvent = GeofencingEvent.fromIntent(intent);
         if (geofencingEvent.hasError()) {
-            Log.e("geofence error", Integer.toString(geofencingEvent.getErrorCode()));
+            String error = String.valueOf(geofencingEvent.getErrorCode());
+            Toast.makeText(getApplicationContext(), "Error code = " + error, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -50,9 +51,16 @@ public class GeofenceIntentService extends IntentService {
                 idsList.add(geofence.getRequestId());
             }
 
-            String ids = TextUtils.join(",", idsList);
+            String status = null;
+            if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
+                status = "Entering";
+            }
+            else if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
+                status = "Exiting";
+            }
 
-            Log.e("Eneter_or_Exit",ids);
+            String geoTransitionDetails =  status + TextUtils.join(": ", idsList);
+            Toast.makeText(getApplicationContext(), geoTransitionDetails, Toast.LENGTH_SHORT).show();
         } else {
             // Log the error.
             Log.e("Another Event", Integer.toString(geofenceTransition));
