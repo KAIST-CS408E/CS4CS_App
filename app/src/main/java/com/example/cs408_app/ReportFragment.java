@@ -7,11 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.location.GeofencingClient;
+
+
 /**
  * Created by 권태형 on 2018-09-29.
  */
 
 public class ReportFragment extends Fragment {
+
+
     /**
      * The fragment argument representing the section number for this
      * fragment.
