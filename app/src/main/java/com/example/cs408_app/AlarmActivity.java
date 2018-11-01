@@ -64,7 +64,7 @@ public class AlarmActivity extends AppCompatActivity {
                         longitude,
                         radius
                 )
-                .setExpirationDuration(NEVER_EXPIRE)
+                .setExpirationDuration(5*1000)
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
                         Geofence.GEOFENCE_TRANSITION_EXIT)
                 .build());

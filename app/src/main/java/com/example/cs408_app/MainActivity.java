@@ -16,11 +16,11 @@ public class MainActivity extends AppCompatActivity {
 
         Button button;
 
-        button = findViewById(R.id.button_alarm);
+        button = findViewById(R.id.button_map);
         button.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent intent = new Intent(MainActivity.this, AlarmActivity.class);
+                Intent intent = new Intent(MainActivity.this, MapActivity.class);
                 startActivity(intent);
             }
         });
