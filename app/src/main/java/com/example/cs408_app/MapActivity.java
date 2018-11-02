@@ -18,6 +18,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,9 +28,10 @@ import com.google.android.gms.tasks.Task;
  * Created by 권태형 on 2018-11-01.
  */
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
 
     private GoogleMap mMap;
+    private Marker mMarker;
     private Boolean mLocationPermissionGranted = false;
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -127,6 +129,28 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
             getDeviceLocation();
             //mMap.setMyLocationEnabled(true);
         }
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+
+                if(mMarker != null)
+                    mMarker.remove();
+
+                mMarker = mMap.addMarker(new MarkerOptions()
+                .position(latLng));
+            }
+        });
+
+        mMap.setOnMarkerClickListener(this);
+    }
+
+    @Override
+    public boolean onMarkerClick(final Marker marker) {
+
+        mMarker.remove();
+        mMarker = null;
+        return false;
     }
 
     @Override
