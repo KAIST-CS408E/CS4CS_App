@@ -10,6 +10,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.SeekBar;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -28,7 +31,8 @@ import com.google.android.gms.tasks.Task;
  * Created by 권태형 on 2018-11-01.
  */
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
+        GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener{
 
     private GoogleMap mMap;
     private Marker mMarker;
@@ -39,6 +43,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private static final float DEFAULT_ZOOM = 15F;
     private static final String TAG = "MapActivity";
+    private boolean block_map_click = false;
 
     private void getLocationPermission(){
 
@@ -118,6 +123,33 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
+        Button ok_button = findViewById(R.id.ok);
+        Button cancle_button = findViewById(R.id.cancle);
+
+        ok_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SeekBar bar = findViewById(R.id.seekBar);
+                view.setVisibility(View.INVISIBLE);
+                bar.setVisibility(View.VISIBLE);
+            }
+        });
+
+        cancle_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                mMarker.remove();
+                mMarker = null;
+                view.setVisibility(View.INVISIBLE);
+                findViewById(R.id.ok).setVisibility(View.INVISIBLE);
+                findViewById(R.id.seekBar).setVisibility(View.INVISIBLE);
+
+                mMap.getUiSettings().setAllGesturesEnabled(true);
+                block_map_click = false;
+            }
+        });
+
         getLocationPermission();
     }
 
@@ -130,26 +162,34 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             //mMap.setMyLocationEnabled(true);
         }
 
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-
-                if(mMarker != null)
-                    mMarker.remove();
-
-                mMarker = mMap.addMarker(new MarkerOptions()
-                .position(latLng));
-            }
-        });
-
+        mMap.setOnMapClickListener(this);
         mMap.setOnMarkerClickListener(this);
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+
+        if (!block_map_click) {
+            if (mMarker != null)
+                mMarker.remove();
+
+            mMarker = mMap.addMarker(new MarkerOptions()
+                    .position(latLng));
+        }
     }
 
     @Override
     public boolean onMarkerClick(final Marker marker) {
 
-        mMarker.remove();
-        mMarker = null;
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
+        mMap.getUiSettings().setAllGesturesEnabled(false);
+        block_map_click = true;
+        Button ok_button = findViewById(R.id.ok);
+        Button cancle_button = findViewById(R.id.cancle);
+
+        ok_button.setVisibility(View.VISIBLE);
+        cancle_button.setVisibility(View.VISIBLE);
+
         return false;
     }
 
