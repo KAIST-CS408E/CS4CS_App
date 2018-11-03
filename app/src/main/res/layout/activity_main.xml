@@ -34,11 +34,6 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
             <Button
                 android:id="@+id/button_map"
                 android:layout_width="match_parent"
@@ -50,15 +45,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Report" />
-
             <Button
                 android:id="@+id/button_send_report"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="(temp) SEND REPORT" />
-        </LinearLayout>
-
     </LinearLayout>
-
-
 </android.support.design.widget.CoordinatorLayout>

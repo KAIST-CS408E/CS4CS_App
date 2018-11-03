@@ -2,6 +2,7 @@ package com.example.cs408_app;
 
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -11,7 +12,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -32,7 +35,7 @@ import com.google.android.gms.tasks.Task;
  */
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
-        GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener{
+        GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener, SeekBar.OnSeekBarChangeListener{
 
     private GoogleMap mMap;
     private Marker mMarker;
@@ -119,6 +122,26 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     }
 
     @Override
+    public void onStopTrackingTouch(SeekBar seekBar){
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar){
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
+
+        View risk_area = findViewById(R.id.risk_area);
+        ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) risk_area.getLayoutParams();
+        params.width = progress;
+        params.height = progress;
+
+        Log.e(TAG,Integer.toString(progress));
+        risk_area.setLayoutParams(params);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
@@ -126,12 +149,18 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         Button ok_button = findViewById(R.id.ok);
         Button cancle_button = findViewById(R.id.cancle);
 
+        SeekBar seekBar = findViewById(R.id.seekBar);
+        seekBar.setMax(700);
+        seekBar.setOnSeekBarChangeListener(this);
+
         ok_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SeekBar bar = findViewById(R.id.seekBar);
+
+                findViewById(R.id.risk_area).setVisibility(View.VISIBLE);
                 view.setVisibility(View.INVISIBLE);
-                bar.setVisibility(View.VISIBLE);
+                findViewById(R.id.seekBar).setVisibility(View.VISIBLE);
+
             }
         });
 
@@ -141,9 +170,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
                 mMarker.remove();
                 mMarker = null;
+
                 view.setVisibility(View.INVISIBLE);
                 findViewById(R.id.ok).setVisibility(View.INVISIBLE);
                 findViewById(R.id.seekBar).setVisibility(View.INVISIBLE);
+                findViewById(R.id.risk_area).setVisibility(View.INVISIBLE);
 
                 mMap.getUiSettings().setAllGesturesEnabled(true);
                 block_map_click = false;
