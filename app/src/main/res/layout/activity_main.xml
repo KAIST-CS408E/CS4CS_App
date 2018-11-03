@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_weight="1"
-                android:background="?attr/colorPrimary"
+                android:background="?attr/colorPrimaryDark"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:title="@string/app_name">
@@ -45,10 +45,5 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Report" />
-            <Button
-                android:id="@+id/button_send_report"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="(temp) SEND REPORT" />
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

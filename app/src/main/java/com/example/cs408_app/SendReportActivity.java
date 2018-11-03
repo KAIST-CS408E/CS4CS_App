@@ -1,9 +1,11 @@
 package com.example.cs408_app;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,19 +15,32 @@ import android.widget.Toast;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class SendReportActivity extends AppCompatActivity {
     Button report_btn;
     EditText titleText;
     EditText descText;
     RadioGroup category;
+
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_report);
+
         report_btn = findViewById(R.id.button_report);
         titleText = (EditText) findViewById(R.id.title_input);
         category = (RadioGroup) findViewById(R.id.category);
         descText = (EditText) findViewById(R.id.desc_input);
+
+        Intent intent = getIntent();
+        double lat = intent.getDoubleExtra("Latitude", 0);
+        double lng = intent.getDoubleExtra("Longitude", 0);
+        double rad = intent.getDoubleExtra("Radius", 0);
+
+        Log.e("TAG", Double.toString(lat));
+        Log.e("TAG", Double.toString(lng));
+        Log.e("TAG", Double.toString(rad));
+
         report_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

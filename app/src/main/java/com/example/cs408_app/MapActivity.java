@@ -3,6 +3,7 @@ package com.example.cs408_app;
 
 import android.Manifest;
 import android.app.ActionBar;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -147,18 +148,37 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         Button ok_button = findViewById(R.id.ok);
         Button cancle_button = findViewById(R.id.cancle);
+        Button send_button = findViewById(R.id.send);
 
         SeekBar seekBar = findViewById(R.id.seekBar);
         seekBar.setMax(200);
         seekBar.setOnSeekBarChangeListener(this);
+
+        send_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MapActivity.this, SendReportActivity.class);
+                LatLng position = mMarker.getPosition();
+
+                double Lat = position.latitude;
+                double Lng = position.longitude;
+
+                intent.putExtra("Latitude", Lat);
+                intent.putExtra("Longitude", Lng);
+                intent.putExtra("Radius", circle.getRadius());
+
+                startActivity(intent);
+            }
+        });
 
         ok_button.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
 
-                view.setVisibility(View.INVISIBLE);
+                view.setVisibility(View.GONE);
                 findViewById(R.id.seekBar).setVisibility(View.VISIBLE);
+                findViewById(R.id.send).setVisibility(View.VISIBLE);
 
                 circle = mMap.addCircle(new CircleOptions()
                         .center(mMarker.getPosition()).radius(50)
@@ -175,6 +195,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
                 view.setVisibility(View.INVISIBLE);
                 findViewById(R.id.ok).setVisibility(View.INVISIBLE);
+                findViewById(R.id.send).setVisibility(View.GONE);
                 findViewById(R.id.seekBar).setVisibility(View.INVISIBLE);
 
                 circle.remove();
@@ -217,11 +238,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
         mMap.getUiSettings().setAllGesturesEnabled(false);
         block_map_click = true;
-        Button ok_button = findViewById(R.id.ok);
-        Button cancle_button = findViewById(R.id.cancle);
 
-        ok_button.setVisibility(View.VISIBLE);
-        cancle_button.setVisibility(View.VISIBLE);
+        findViewById(R.id.ok).setVisibility(View.VISIBLE);
+        findViewById(R.id.cancle).setVisibility(View.VISIBLE);
 
         return false;
     }
