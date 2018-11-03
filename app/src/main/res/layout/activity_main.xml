@@ -45,8 +45,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Report" />
-
+            <Button
+                android:id="@+id/button_send_report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="(temp) SEND REPORT" />
     </LinearLayout>
-
-
 </android.support.design.widget.CoordinatorLayout>
