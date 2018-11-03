@@ -69,19 +69,10 @@
 
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:alpha="0.5"
-                android:id="@+id/risk_area"
-                android:visibility="invisible"
-                android:layout_centerInParent="true"
-                android:src="@drawable/circle" />
-
             <SeekBar
                 android:id="@+id/seekBar"
                 android:visibility="invisible"
-                android:progress="120"
+                android:progress="50"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"

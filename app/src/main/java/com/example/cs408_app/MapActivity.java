@@ -4,6 +4,7 @@ package com.example.cs408_app;
 import android.Manifest;
 import android.app.ActionBar;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,6 +24,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -44,9 +47,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private FusedLocationProviderClient mFusedLocationProviderClient;
-    private static final float DEFAULT_ZOOM = 15F;
+    private static final float DEFAULT_ZOOM = 17F;
     private static final String TAG = "MapActivity";
     private boolean block_map_click = false;
+    private Circle circle;
 
     private void getLocationPermission(){
 
@@ -132,13 +136,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
 
-        View risk_area = findViewById(R.id.risk_area);
-        ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) risk_area.getLayoutParams();
-        params.width = progress;
-        params.height = progress;
-
-        Log.e(TAG,Integer.toString(progress));
-        risk_area.setLayoutParams(params);
+        Log.e("TAG",Integer.toString(progress));
+        circle.setRadius(progress);
     }
 
     @Override
@@ -150,17 +149,20 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         Button cancle_button = findViewById(R.id.cancle);
 
         SeekBar seekBar = findViewById(R.id.seekBar);
-        seekBar.setMax(700);
+        seekBar.setMax(200);
         seekBar.setOnSeekBarChangeListener(this);
 
         ok_button.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
 
-                findViewById(R.id.risk_area).setVisibility(View.VISIBLE);
                 view.setVisibility(View.INVISIBLE);
                 findViewById(R.id.seekBar).setVisibility(View.VISIBLE);
 
+                circle = mMap.addCircle(new CircleOptions()
+                        .center(mMarker.getPosition()).radius(50)
+                        .fillColor(0x80F46542).strokeWidth(0F));
             }
         });
 
@@ -174,8 +176,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 view.setVisibility(View.INVISIBLE);
                 findViewById(R.id.ok).setVisibility(View.INVISIBLE);
                 findViewById(R.id.seekBar).setVisibility(View.INVISIBLE);
-                findViewById(R.id.risk_area).setVisibility(View.INVISIBLE);
 
+                circle.remove();
                 mMap.getUiSettings().setAllGesturesEnabled(true);
                 block_map_click = false;
             }
