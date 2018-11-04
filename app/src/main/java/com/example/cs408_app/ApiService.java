@@ -10,7 +10,7 @@ import retrofit2.http.POST;
  */
 
 public interface ApiService {
-    public static final String API_URL = "172.30.1.52:8002";
+    public static final String API_URL = "172.30.1.52:8003";
     @POST("/alarm")
     Call<response_body> postAlarm(@Body Alarm alarm);
 }

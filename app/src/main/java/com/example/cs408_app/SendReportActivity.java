@@ -87,7 +87,7 @@ public class SendReportActivity extends AppCompatActivity {
         double rad = intent.getDoubleExtra("Radius", 0);
 
         Alarm alarm = new Alarm(lat, lng, rad);
-        //postData(alarm);
+        postData(alarm);
 
         report_btn.setOnClickListener(new View.OnClickListener() {
             @Override
