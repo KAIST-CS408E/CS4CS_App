@@ -13,32 +13,16 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.cs408_app.Model.Alarm;
+import com.example.cs408_app.Model.Response;
+
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.http.Body;
-import retrofit2.http.POST;
-
-class Alarm{
-    double lat, lng, radius;
-
-    public  Alarm(double lat, double lng, double radius){
-        this.lat = lat;
-        this.lng = lng;
-        this.lng = lng;
-    }
-
-}
-
-class response_body{
-    boolean success;
-}
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SendReportActivity extends AppCompatActivity {
     Button report_btn;
@@ -50,20 +34,19 @@ public class SendReportActivity extends AppCompatActivity {
     final String TAG = "SendReportActivity";
 
     public void postData(Alarm alarm){
-        Call<response_body> call = apiService.postAlarm(alarm);
+        Call<Response> call = apiService.postAlarm(alarm);
 
-        call.enqueue(new Callback<response_body>() {
+        call.enqueue(new Callback<Response>() {
             @Override
-            public void onResponse(Call<response_body> call, Response<response_body> response) {
-
+            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                 if(response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(), response.body().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<response_body> call, Throwable t) {
-                Log.e(TAG, t.getLocalizedMessage());
+            public void onFailure(Call<Response> call, Throwable t) {
+                Log.e(TAG, t.toString());
             }
         });
 
@@ -78,7 +61,8 @@ public class SendReportActivity extends AppCompatActivity {
         category = (RadioGroup) findViewById(R.id.category);
         descText = (EditText) findViewById(R.id.desc_input);
 
-        retrofit = new Retrofit.Builder().baseUrl(ApiService.API_URL).build();
+        retrofit = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create()).baseUrl(ApiService.API_URL).build();
         apiService = retrofit.create(ApiService.class);
 
         Intent intent = getIntent();

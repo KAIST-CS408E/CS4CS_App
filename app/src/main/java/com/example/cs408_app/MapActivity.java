@@ -137,7 +137,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
 
-        Log.e("TAG",Integer.toString(progress));
+        //Log.e("TAG",Integer.toString(progress));
         circle.setRadius(progress);
     }
 
@@ -165,6 +165,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
                 intent.putExtra("Latitude", Lat);
                 intent.putExtra("Longitude", Lng);
+                Log.e(TAG,Double.toString(circle.getRadius()));
                 intent.putExtra("Radius", circle.getRadius());
 
                 startActivity(intent);
