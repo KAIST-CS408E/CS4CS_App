@@ -246,6 +246,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     }
 
     @Override
+    public void onStop () {
+        super.onStop();;
+        Log.e(TAG,"onStop");
+    }
+
+    @Override
     public void onRestart() {
         super.onRestart();
         Log.e(TAG, "onRestart");
