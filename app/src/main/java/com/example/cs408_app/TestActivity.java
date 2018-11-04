@@ -26,14 +26,15 @@ public class TestActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_server_connection_test);
-
         textView = findViewById(R.id.welcome_text);
+
 
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://" + Constants.server_ip + ":8003")
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create()) // convert request inputs into JSON, and recognize response outputs as JSON.
                 .build();
 
+        // indicate the interface we are going to use
         cs4csApi = retrofit.create(CS4CSApi.class);
 
         displayWelcomeMsg();
