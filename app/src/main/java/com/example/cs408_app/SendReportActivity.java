@@ -32,6 +32,12 @@ public class SendReportActivity extends AppCompatActivity {
     RadioGroup category;
     CS4CSApi apiService;
     Retrofit retrofit;
+
+    // geofencing parameters
+    double geo_lat;
+    double geo_lng;
+    double geo_rad;
+
     final String TAG = "SendReportActivity";
 
     public void postData(Alarm alarm){
@@ -67,12 +73,10 @@ public class SendReportActivity extends AppCompatActivity {
         apiService = retrofit.create(CS4CSApi.class);
 
         Intent intent = getIntent();
-        double lat = intent.getDoubleExtra("Latitude", 0);
-        double lng = intent.getDoubleExtra("Longitude", 0);
-        double rad = intent.getDoubleExtra("Radius", 0);
+        geo_lat = intent.getDoubleExtra("Latitude", 0);
+        geo_lng = intent.getDoubleExtra("Longitude", 0);
+        geo_rad = intent.getDoubleExtra("Radius", 0);
 
-        Alarm alarm = new Alarm(lat, lng, rad);
-        postData(alarm);
 
         report_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,13 +90,15 @@ public class SendReportActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                         String title = titleText.getText().toString();
-                        List<String> supplierNames = Arrays.asList("opt1", "opt2", "opt3", "opt4", "opt5");
                         int cat_id = category.getCheckedRadioButtonId();
                         RadioButton r = (RadioButton) category.findViewById(cat_id);
                         String cat_str = r.getText().toString();
                         String desc = descText.getText().toString();
 
-                        // TODO: SEND REPORT
+                        // send alert
+                        Alarm alarm = new Alarm(geo_lat, geo_lng, geo_rad, title, cat_str, desc);
+                        postData(alarm);
+
                         Toast.makeText(SendReportActivity.this, "title: "+title+"\ncategory: "+cat_str+"\n", Toast.LENGTH_SHORT).show();
 
                         dialogInterface.dismiss();
