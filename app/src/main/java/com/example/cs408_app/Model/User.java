@@ -7,7 +7,6 @@ public class User {
     String phone_number;
     String created_at;
     String token;
-//    String newPassword;
 //    boolean kaistian;
 
     public User(String name, String email, String phone_number) {

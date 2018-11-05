@@ -51,5 +51,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Server Connection Test" />
+
+            <Button
+                android:id="@+id/button_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sign Up" />
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
