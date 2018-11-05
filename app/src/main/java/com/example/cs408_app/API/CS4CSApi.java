@@ -12,7 +12,6 @@ import retrofit2.http.Query;
 
 public interface CS4CSApi {
 
-    public static final String API_URL = "http://172.30.1.52:8003";
     /*
     Interface form: OutputType FunctionName(InputType InputName, ...);
     To request some action from the server, you need:

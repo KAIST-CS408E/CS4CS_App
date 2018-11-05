@@ -14,6 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.cs408_app.API.CS4CSApi;
+import com.example.cs408_app.Config.Constants;
 import com.example.cs408_app.Model.Alarm;
 import com.example.cs408_app.Model.Response;
 
@@ -69,7 +70,7 @@ public class SendReportActivity extends AppCompatActivity {
         descText = (EditText) findViewById(R.id.desc_input);
 
         retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create()).baseUrl(CS4CSApi.API_URL).build();
+                .addConverterFactory(GsonConverterFactory.create()).baseUrl(Constants.server_ip + Constants.server_port).build();
         apiService = retrofit.create(CS4CSApi.class);
 
         Intent intent = getIntent();
