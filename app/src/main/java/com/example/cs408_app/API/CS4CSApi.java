@@ -1,4 +1,5 @@
 package com.example.cs408_app.API;
+import com.example.cs408_app.Model.Alarm;
 import com.example.cs408_app.Model.Response;
 import com.example.cs408_app.Model.User;
 
@@ -38,4 +39,7 @@ public interface CS4CSApi {
 
     @GET("/")
     Call<Response> welcomeMsg();
+
+    @POST("/alarm")
+    Call<Response> postAlarm(@Body Alarm alarm);
 }
