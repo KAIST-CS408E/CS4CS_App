@@ -13,6 +13,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.cs408_app.API.CS4CSApi;
 import com.example.cs408_app.Model.Alarm;
 import com.example.cs408_app.Model.Response;
 
@@ -29,7 +30,7 @@ public class SendReportActivity extends AppCompatActivity {
     EditText titleText;
     EditText descText;
     RadioGroup category;
-    ApiService apiService;
+    CS4CSApi apiService;
     Retrofit retrofit;
     final String TAG = "SendReportActivity";
 
@@ -62,8 +63,8 @@ public class SendReportActivity extends AppCompatActivity {
         descText = (EditText) findViewById(R.id.desc_input);
 
         retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create()).baseUrl(ApiService.API_URL).build();
-        apiService = retrofit.create(ApiService.class);
+                .addConverterFactory(GsonConverterFactory.create()).baseUrl(CS4CSApi.API_URL).build();
+        apiService = retrofit.create(CS4CSApi.class);
 
         Intent intent = getIntent();
         double lat = intent.getDoubleExtra("Latitude", 0);

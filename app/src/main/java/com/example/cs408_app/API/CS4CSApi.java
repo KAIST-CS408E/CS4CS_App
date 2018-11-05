@@ -1,4 +1,5 @@
 package com.example.cs408_app.API;
+import com.example.cs408_app.Model.Alarm;
 import com.example.cs408_app.Model.Response;
 import com.example.cs408_app.Model.User;
 
@@ -11,6 +12,7 @@ import retrofit2.http.Query;
 
 public interface CS4CSApi {
 
+    public static final String API_URL = "http://172.30.1.52:8003";
     /*
     Interface form: OutputType FunctionName(InputType InputName, ...);
     To request some action from the server, you need:
@@ -38,4 +40,7 @@ public interface CS4CSApi {
 
     @GET("/")
     Call<Response> welcomeMsg();
+
+    @POST("/alarm")
+    Call<Response> postAlarm(@Body Alarm alarm);
 }
