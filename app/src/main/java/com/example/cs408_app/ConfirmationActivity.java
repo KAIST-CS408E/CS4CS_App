@@ -125,6 +125,7 @@ public class ConfirmationActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 } else if (response.body() != null) {
+                    Log.e("Error", response.body().getMessage());
                     Toast.makeText(ConfirmationActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }

@@ -124,6 +124,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     if (response.code() == 201) {
                         // Start ConfirmationActivity with extra values; name, email, phone_number
+                        Toast.makeText(RegisterActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(RegisterActivity.this, ConfirmationActivity.class)
                                 .putExtra("name", name)
                                 .putExtra("email", email)
@@ -131,6 +132,7 @@ public class RegisterActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 } else if (response.body() != null) {
+                    Log.e("Error", response.body().getMessage());
                     Toast.makeText(RegisterActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
