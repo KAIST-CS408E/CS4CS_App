@@ -67,7 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Build the Retrofit
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://" + Constants.server_ip + ":8003")
+                .baseUrl(Constants.server_ip + Constants.server_port)
                 .addConverterFactory(GsonConverterFactory.create()) // convert request inputs into JSON, and recognize response outputs as JSON.
                 .build();
 
