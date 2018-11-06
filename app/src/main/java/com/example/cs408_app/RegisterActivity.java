@@ -21,8 +21,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.lang.annotation.Annotation;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -121,26 +126,63 @@ public class RegisterActivity extends AppCompatActivity {
         call.enqueue(new Callback<Response>() {
             @Override
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    if (response.code() == 201) {
-                        // Start ConfirmationActivity with extra values; name, email, phone_number
-                        Toast.makeText(RegisterActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(RegisterActivity.this, ConfirmationActivity.class)
-                                .putExtra("name", name)
-                                .putExtra("email", email)
-                                .putExtra("phone_number", phone_number);
-                        startActivity(intent);
+
+                // if the response is successful
+                if (response.isSuccessful() && response.body() != null && response.code() == 201) {
+                    Toast.makeText(RegisterActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+
+                    // Start ConfirmationActivity
+                    // and toss some values; name, email, phone_number
+                    Intent intent = new Intent(RegisterActivity.this, ConfirmationActivity.class)
+                            .putExtra("name", name)
+                            .putExtra("email", email)
+                            .putExtra("phone_number", phone_number);
+                    startActivity(intent);
+                }
+
+                // if the response is not successful (then app receives intended error message)
+                else if (!response.isSuccessful() && response.errorBody() != null) {
+
+                    // Manually extract an error message from JSON response
+                    // ([Not important] Due to unknown reason, if the response was not successful, Retrofit ignore the explicit error message in the JSON response.
+                    // Thus, we need to manually extract the error message in the JSON response)
+                    Converter<ResponseBody, Response> errorConverter =
+                            retrofit.responseBodyConverter(Response.class, new Annotation[0]);
+
+                    try {
+                        Response error = errorConverter.convert(response.errorBody());
+                        // show the error message
+                        Toast.makeText(RegisterActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(RegisterActivity.this, "Something wrong, please try again !", Toast.LENGTH_LONG).show();
                     }
-                } else if (response.body() != null) {
-                    Log.e("Error", response.body().getMessage());
-                    Toast.makeText(RegisterActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                    // Refresh this activity
+                    // remove the activity stack ("go back" button will close the app, not return to register activity)
+                    finish();
+                    overridePendingTransition(0, 0);
+                    startActivity(getIntent());
+                    overridePendingTransition(0, 0);
+                }
+
+                else {
+                    Toast.makeText(RegisterActivity.this, "Unknown error" , Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<Response> call, Throwable t) {
+            public void onFailure(Call<Response> call, Throwable t) { // even the request is not succeed
+
                 Log.e("Server Connection Fail", t.getLocalizedMessage());
-                Toast.makeText(RegisterActivity.this, "Server Connection Fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "Server Connection Fail", Toast.LENGTH_LONG).show();
+
+                // Refresh this activity
+                // remove the activity stack ("go back" button will close the app, not return to register activity)
+                finish();
+                overridePendingTransition(0, 0);
+                startActivity(getIntent());
+                overridePendingTransition(0, 0);
             }
         });
     }
