@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cs408_app.Config.Constants;
 
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         Boolean is_registered = preferences.getBoolean("is_registered",false);
         if(!is_registered){
+            Toast.makeText(this, "Not registered!", Toast.LENGTH_SHORT).show();
             if(Constants.cheat_login){
                 preferences.edit().putString("user_email", Constants.cheat_email).commit();
             }
@@ -74,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
                 finish();
                 startActivity(intent);
             }
+        }
+        else{
+            Toast.makeText(this, "logged in", Toast.LENGTH_SHORT).show();
         }
 
     }

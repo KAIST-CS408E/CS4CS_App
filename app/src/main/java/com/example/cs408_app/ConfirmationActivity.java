@@ -133,16 +133,15 @@ public class ConfirmationActivity extends AppCompatActivity {
 
                 // if the response is successful
                 if (response.isSuccessful() && response.body() != null && response.code() == 200) {
-                    Toast.makeText(ConfirmationActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ConfirmationActivity.this, response.body().getMessage()+"\n"+user.getEmail(), Toast.LENGTH_LONG).show();
+
+                    // Register succeed!!
+                    preferences.edit().putString("user_email", user.getEmail()).commit();
+                    preferences.edit().putBoolean("is_registered", true).apply();
 
                     // Start main activity
                     Intent intent = new Intent(ConfirmationActivity.this, MainActivity.class);
                     startActivity(intent);
-
-                    // Register succeed!!
-                    preferences.edit().putString("user_name", user.getEmail());
-                    preferences.edit().putBoolean("is_registered", true).apply();
-                    preferences.edit().commit();
                 }
 
                 // if the response is not successful (then app receives intended error message)
