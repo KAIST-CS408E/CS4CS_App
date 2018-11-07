@@ -122,7 +122,7 @@ public class ConfirmationActivity extends AppCompatActivity {
 
     private void userConfirmTaskExecute(String name, String email, String phone_number, String secret_code) {
 
-        User user = new User(name, email, phone_number);
+        final User user = new User(name, email, phone_number);
         user.setToken(secret_code);
 
         Call<Response> call = cs4csApi.register(user);
@@ -140,7 +140,9 @@ public class ConfirmationActivity extends AppCompatActivity {
                     startActivity(intent);
 
                     // Register succeed!!
+                    preferences.edit().putString("user_name", user.getEmail());
                     preferences.edit().putBoolean("is_registered", true).apply();
+                    preferences.edit().commit();
                 }
 
                 // if the response is not successful (then app receives intended error message)

@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.example.cs408_app.Config.Constants;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,14 +62,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if (! preferences.getBoolean("is_registered",false)) {
-            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+        Boolean is_registered = preferences.getBoolean("is_registered",false);
+        if(!is_registered){
+            if(Constants.cheat_login){
+                preferences.edit().putString("user_email", Constants.cheat_email).commit();
+            }
+            else{
+                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
 
-            // remove the activity stack ("go back" button will close the app, not return to main activity)
-            finish();
-            startActivity(intent);
+                // remove the activity stack ("go back" button will close the app, not return to main activity)
+                finish();
+                startActivity(intent);
+            }
         }
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TextView tv = findViewById(R.id.text_user);
+        String user_email = preferences.getString("user_email", "NO USER EMAIL");
+        tv.setText("Current user: "+ user_email);
+    }
 }

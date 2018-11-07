@@ -34,28 +34,37 @@
 
         </android.support.design.widget.AppBarLayout>
 
-            <Button
-                android:id="@+id/button_map"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Go to map" />
+        <TextView
+            android:id="@+id/text_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CURRENT USER UNKNOWN"
+            android:textAlignment="center"
+            android:textSize="18sp" />
 
-            <Button
-                android:id="@+id/button_report"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Report" />
+        <Button
+            android:id="@+id/button_map"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Go to map" />
 
-            <Button
-                android:id="@+id/button_server_connection_test"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Server Connection Test" />
+        <Button
+            android:id="@+id/button_report"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Report" />
 
-            <Button
-                android:id="@+id/button_register"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Sign Up" />
+        <Button
+            android:id="@+id/button_server_connection_test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Server Connection Test" />
+
+        <Button
+            android:id="@+id/button_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign Up" />
+
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

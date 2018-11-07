@@ -18,4 +18,5 @@ public class User {
     public void setToken(String token) {
         this.token = token;
     }
+    public String getEmail() {return this.email;}
 }
