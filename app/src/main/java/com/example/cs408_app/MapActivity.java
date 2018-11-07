@@ -168,6 +168,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 Log.e(TAG,Double.toString(circle.getRadius()));
                 intent.putExtra("Radius", circle.getRadius());
 
+                finish();
                 startActivity(intent);
             }
         });
