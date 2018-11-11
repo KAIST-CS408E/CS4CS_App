@@ -35,42 +35,21 @@
         </android.support.design.widget.AppBarLayout>
 
         <TextView
-            android:id="@+id/text_user"
+            android:id="@+id/text_preview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CURRENT USER UNKNOWN"
-            android:textAlignment="center"
-            android:textSize="18sp" />
+            android:text="quick preview" />
 
         <Button
-            android:id="@+id/button_map"
+            android:id="@+id/refresh_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Go to map" />
+            android:text="REFRESH" />
 
-        <Button
-            android:id="@+id/button_report"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Report" />
-
-        <Button
-            android:id="@+id/button_server_connection_test"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Server Connection Test" />
-
-        <Button
-            android:id="@+id/button_register"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sign Up" />
-
-        <Button
-            android:id="@+id/button_all_alarms"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="VIEW ALL ALARMS" />
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

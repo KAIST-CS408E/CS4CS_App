@@ -63,6 +63,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        button = findViewById(R.id.button_all_alarms);
+        button.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, AllAlarmsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
         Boolean is_registered = preferences.getBoolean("is_registered",false);
         if(!is_registered){
             Toast.makeText(this, "Not registered!", Toast.LENGTH_SHORT).show();
