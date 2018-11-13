@@ -27,16 +27,6 @@ public class MainActivity extends AppCompatActivity {
         // Retrieve and hold the contents of the preferences file "register"
         preferences = getSharedPreferences("register", MODE_PRIVATE); // can be edited by this app exclusively
 
-        button = findViewById(R.id.service_button);
-        button.setOnClickListener(new Button.OnClickListener(){
-
-            @Override
-            public void onClick(View view){
-                Intent intent = new Intent(MainActivity.this, AlarmService.class);
-                startService(intent);
-            }
-        });
-
         button = findViewById(R.id.button_map);
         button.setOnClickListener(new Button.OnClickListener(){
             @Override
