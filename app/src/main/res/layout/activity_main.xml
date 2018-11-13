@@ -72,5 +72,11 @@
             android:layout_height="wrap_content"
             android:text="VIEW ALL ALARMS" />
 
+        <Button
+            android:id="@+id/service_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start service" />
+
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
