@@ -61,6 +61,10 @@
             android:name=".ConfirmationActivity"
             android:label="@string/title_activity_confirmation"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".AllAlarmsActivity"
+            android:label="@string/title_activity_confirmation"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -2,7 +2,9 @@ package com.example.cs408_app;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -34,6 +36,9 @@ public class SendReportActivity extends AppCompatActivity {
     CS4CSApi apiService;
     Retrofit retrofit;
 
+
+    SharedPreferences preferences;
+
     // geofencing parameters
     double geo_lat;
     double geo_lng;
@@ -50,6 +55,9 @@ public class SendReportActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
+                else{
+                    Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -63,6 +71,8 @@ public class SendReportActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_report);
+
+        preferences = getSharedPreferences("register", MODE_PRIVATE); // can be edited by this app exclusively
 
         report_btn = findViewById(R.id.button_report);
         titleText = (EditText) findViewById(R.id.title_input);
@@ -97,11 +107,10 @@ public class SendReportActivity extends AppCompatActivity {
                         String desc = descText.getText().toString();
 
                         // send alert
-                        Alarm alarm = new Alarm(geo_lat, geo_lng, geo_rad, title, cat_str, desc);
+                        String reporter = preferences.getString("user_email", "UNVERIFIED");
+                        Alarm alarm = new Alarm(geo_lat, geo_lng, geo_rad, title, cat_str, desc, reporter);
                         postData(alarm);
-
-                        Toast.makeText(SendReportActivity.this, "title: "+title+"\ncategory: "+cat_str+"\n", Toast.LENGTH_SHORT).show();
-
+                        finish();
                         dialogInterface.dismiss();
                     }
                 });

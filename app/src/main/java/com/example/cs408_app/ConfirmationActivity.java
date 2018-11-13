@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,8 +20,13 @@ import com.example.cs408_app.Config.Constants;
 import com.example.cs408_app.Model.Response;
 import com.example.cs408_app.Model.User;
 
+import java.io.IOException;
+import java.lang.annotation.Annotation;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -35,6 +41,10 @@ public class ConfirmationActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private CS4CSApi cs4csApi;
 
+    // Shared Preferences
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -43,6 +53,9 @@ public class ConfirmationActivity extends AppCompatActivity {
 
         // Set up the register form
         mCodeView = findViewById(R.id.code);
+
+        // Retrieve and hold the contents of the preferences file "register"
+        preferences = getSharedPreferences("register", MODE_PRIVATE); // can be edited by this app exclusively
 
         Button mConfirmButton = findViewById(R.id.confirm_button);
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +108,7 @@ public class ConfirmationActivity extends AppCompatActivity {
                 email = extras.getString("email");
                 phone_number = extras.getString("phone_number");
 
-                showProgress(true);
+                //showProgress(true);
                 userConfirmTaskExecute(name, email, phone_number, secret_code);
 
             } else {
@@ -109,7 +122,7 @@ public class ConfirmationActivity extends AppCompatActivity {
 
     private void userConfirmTaskExecute(String name, String email, String phone_number, String secret_code) {
 
-        User user = new User(name, email, phone_number);
+        final User user = new User(name, email, phone_number);
         user.setToken(secret_code);
 
         Call<Response> call = cs4csApi.register(user);
@@ -117,15 +130,48 @@ public class ConfirmationActivity extends AppCompatActivity {
         call.enqueue(new Callback<Response>() {
             @Override
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    if (response.code() == 200) {
-                        // Start ConfirmationActivity with extra values; name, email, phone_number
-                        Toast.makeText(ConfirmationActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(ConfirmationActivity.this, MainActivity.class);
-                        startActivity(intent);
+
+                // if the response is successful
+                if (response.isSuccessful() && response.body() != null && response.code() == 200) {
+                    Toast.makeText(ConfirmationActivity.this, response.body().getMessage()+"\n"+user.getEmail(), Toast.LENGTH_LONG).show();
+
+                    // Register succeed!!
+                    preferences.edit().putString("user_email", user.getEmail()).commit();
+                    preferences.edit().putBoolean("is_registered", true).apply();
+
+                    // Start main activity
+                    Intent intent = new Intent(ConfirmationActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+
+                // if the response is not successful (then app receives intended error message)
+                else if (!response.isSuccessful() && response.errorBody() != null) {
+
+                    // Manually extract an error message from JSON response
+                    // ([Not important] Due to unknown reason, if the response was not successful, Retrofit ignore the explicit error message in the JSON response.
+                    // Thus, we need to manually extract the error message in the JSON response)
+                    Converter<ResponseBody, Response> errorConverter =
+                            retrofit.responseBodyConverter(Response.class, new Annotation[0]);
+
+                    try {
+                        Response error = errorConverter.convert(response.errorBody());
+                        // show the error message
+                        Toast.makeText(ConfirmationActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(ConfirmationActivity.this, "Something wrong, please try again !", Toast.LENGTH_LONG).show();
                     }
-                } else if (response.body() != null) {
-                    Toast.makeText(ConfirmationActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                    // remove the activity stack ("go back" button will close the app, not return to confirmation activity)
+                    finish();
+
+                    // Go back to register activity
+                    Intent intent = new Intent(ConfirmationActivity.this, RegisterActivity.class);
+                    startActivity(intent);
+                }
+
+                else {
+                    Toast.makeText(ConfirmationActivity.this, "Unknown error" , Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -133,6 +179,13 @@ public class ConfirmationActivity extends AppCompatActivity {
             public void onFailure(Call<Response> call, Throwable t) {
                 Log.e("Server Connection Fail", t.getLocalizedMessage());
                 Toast.makeText(ConfirmationActivity.this, "Server Connection Fail", Toast.LENGTH_SHORT).show();
+
+                // remove the activity stack ("go back" button will close the app, not return to confirmation activity)
+                finish();
+
+                // Go back to register activity
+                Intent intent = new Intent(ConfirmationActivity.this, RegisterActivity.class);
+                startActivity(intent);
             }
         });
 

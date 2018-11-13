@@ -1,7 +1,10 @@
 package com.example.cs408_app.API;
 import com.example.cs408_app.Model.Alarm;
+import com.example.cs408_app.Model.AlarmElement;
 import com.example.cs408_app.Model.Response;
 import com.example.cs408_app.Model.User;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -42,4 +45,7 @@ public interface CS4CSApi {
 
     @POST("/alarm")
     Call<Response> postAlarm(@Body Alarm alarm);
+
+    @GET("/alarmlist")
+    Call<List<AlarmElement>> getAlarmList();
 }
