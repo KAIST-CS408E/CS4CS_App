@@ -61,7 +61,7 @@ public class AllAlarmsActivity extends AppCompatActivity {
                         Intent intent = new Intent(AllAlarmsActivity.this, AlarmViewActivity.class);
                         AlarmElement selected = alarmList.get(position);
                         Bundle args = new Bundle();
-                        args.putString("title", selected.getTitle());
+                        args.putSerializable("alarm", selected);
                         intent.putExtras(args);
                         startActivity(intent);
                     }
