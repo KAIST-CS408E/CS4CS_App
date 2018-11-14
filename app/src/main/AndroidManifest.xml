@@ -76,7 +76,6 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
 
-
         <service
             android:name=".MyFirebaseMessagingService">
             <intent-filter>

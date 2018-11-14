@@ -59,6 +59,10 @@ public class AllAlarmsActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(View view, int position) {
                         Intent intent = new Intent(AllAlarmsActivity.this, AlarmViewActivity.class);
+                        AlarmElement selected = alarmList.get(position);
+                        Bundle args = new Bundle();
+                        args.putString("title", selected.getTitle());
+                        intent.putExtras(args);
                         startActivity(intent);
                     }
 
