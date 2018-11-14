@@ -1,5 +1,6 @@
 package com.example.cs408_app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.cs408_app.API.CS4CSApi;
 import com.example.cs408_app.Adapter.AlarmRecyclerAdapter;
+import com.example.cs408_app.Adapter.RecyclerItemClickListener;
 import com.example.cs408_app.Config.Constants;
 import com.example.cs408_app.Model.AlarmElement;
 
@@ -51,7 +53,20 @@ public class AllAlarmsActivity extends AppCompatActivity {
             }
         });
         getAlarmList();
+        RecyclerView recycler = (RecyclerView)findViewById(R.id.recycler);
+        recycler.addOnItemTouchListener(
+                new RecyclerItemClickListener(AllAlarmsActivity.this, recycler, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Intent intent = new Intent(AllAlarmsActivity.this, AlarmViewActivity.class);
+                        startActivity(intent);
+                    }
 
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+                        // nothing much currently
+                    }
+                }));
     }
 
     private void getAlarmList(){
