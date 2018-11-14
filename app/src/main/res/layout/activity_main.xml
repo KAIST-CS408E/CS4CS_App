@@ -72,6 +72,12 @@
             android:layout_height="wrap_content"
             android:text="VIEW ALL ALARMS" />
 
+        <Button
+            android:id="@+id/button_test_self_alarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="[Test]Push Self Alarm" />
+
 
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
