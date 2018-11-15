@@ -39,14 +39,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage){
 
-        Map<String, String> pushDataMap = remoteMessage.getData();
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
 
-            sendNotification(pushDataMap);
+            sendNotification(remoteMessage);
         }
 
         // Check if message contains a notification payload.
@@ -55,19 +54,23 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
     }
 
-    private void sendNotification(Map<String, String> dataMap){
+    private void sendNotification(RemoteMessage remoteMessage){
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_CANCEL_CURRENT);
 
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Map<String ,String> dataMap = remoteMessage.getData();
+        String title = remoteMessage.getNotification().getTitle();
+        String body = remoteMessage.getNotification().getBody();
+
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "MY_channel")
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), android.R.drawable.ic_dialog_info))
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(dataMap.get("title"))
-                .setContentText(dataMap.get("content"))
+                .setContentTitle(title)
+                .setContentText(body)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
