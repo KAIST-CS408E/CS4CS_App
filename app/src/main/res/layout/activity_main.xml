@@ -78,6 +78,23 @@
             android:layout_height="wrap_content"
             android:text="[Test]Push Self Alarm" />
 
+        <Button
+            android:id="@+id/not_alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/buttons"
+            android:layout_below="@+id/seekBar"
+            android:layout_marginTop="31dp"
+            android:text="DeclineAlarm" />
+
+        <Button
+            android:id="@+id/alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/buttons"
+            android:layout_below="@+id/seekBar"
+            android:layout_marginTop="31dp"
+            android:text="ReceiveAlarm" />
 
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
