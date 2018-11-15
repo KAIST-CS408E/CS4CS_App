@@ -66,9 +66,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         PendingIntent registerPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, registerIntent,
                 PendingIntent.FLAG_CANCEL_CURRENT);
 
-        Map<String ,String> dataMap = remoteMessage.getData();
-        String title = remoteMessage.getNotification().getTitle();
-        String body = remoteMessage.getNotification().getBody();
+        Map<String, String> data = remoteMessage.getData();
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "MY_channel")
                 // Show notification even on lock screen
@@ -82,8 +80,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), android.R.drawable.ic_dialog_alert)) // acquire an external resource by using URI(Uniform Resource Identifier)
                 .setSmallIcon(R.mipmap.ic_launcher) // using mipmap, produce smaller icon
                 // Contents
-                .setContentTitle(title)
-                .setContentText(body)
+                .setContentTitle(data.get("title"))
+                .setContentText(data.get("body"))
                 // When a user expands(slide down) original sized notification(above contents), show more info
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText("So I say to you: Ask and it will be given to you; seek and you will find; knock and the door will be opened to you. _Luke11:9"))
