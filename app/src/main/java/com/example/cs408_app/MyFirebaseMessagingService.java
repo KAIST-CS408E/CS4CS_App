@@ -1,5 +1,6 @@
 package com.example.cs408_app;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -29,11 +30,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      */
     @Override
     public void onNewToken(String token) {
-        Log.d(TAG, "Refreshed token: " + token);
+        Log.e(TAG, "Refreshed token: " + token);
 
         // If you want to send messages to this application instance or
         // manage this apps subscriptions on the server side, send the
         // Instance ID token to your app server.
+
     }
 
     @Override
@@ -58,24 +60,42 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+
+        Intent registerIntent = new Intent(this, MainActivity.class);
+        registerIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent registerPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, registerIntent,
                 PendingIntent.FLAG_CANCEL_CURRENT);
 
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Map<String ,String> dataMap = remoteMessage.getData();
         String title = remoteMessage.getNotification().getTitle();
         String body = remoteMessage.getNotification().getBody();
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "MY_channel")
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), android.R.drawable.ic_dialog_info))
-                .setSmallIcon(R.mipmap.ic_launcher)
+                // Show notification even on lock screen
+                .setVisibility(Notification.VISIBILITY_PUBLIC)
+                // use custom mp3 sound file (./res/raw/siren.mp3)
+                .setSound(Uri.parse("android.resource://"
+                        + getApplicationContext().getPackageName() + "/" + R.raw.siren))
+                // off-vibrate time(ms), on-vibrate time, off time, on time, off, on, ...
+                .setVibrate(new long[] {500, 3000, 500, 3000})
+                // Icon size
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), android.R.drawable.ic_dialog_alert)) // acquire an external resource by using URI(Uniform Resource Identifier)
+                .setSmallIcon(R.mipmap.ic_launcher) // using mipmap, produce smaller icon
+                // Contents
                 .setContentTitle(title)
                 .setContentText(body)
+                // When a user expands(slide down) original sized notification(above contents), show more info
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText("So I say to you: Ask and it will be given to you; seek and you will find; knock and the door will be opened to you. _Luke11:9"))
+                // If user click the notification,
+                .setContentIntent(registerPendingIntent)
                 .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
+                // If user click a button after expanding the notification
+                .addAction(new NotificationCompat.Action(R.drawable.common_google_signin_btn_text_dark, "Register", registerPendingIntent))
+                .addAction(new NotificationCompat.Action(R.drawable.common_google_signin_btn_text_dark, "Enter", registerPendingIntent));
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        assert notificationManager != null;
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
 }
