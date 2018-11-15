@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Map<String, String> dataMap = new HashMap<>();
                 dataMap.put("title", "Math is everywhere!!");
-                dataMap.put("content", "Why is the mathematics is the language of science??");
+                dataMap.put("content", "So I say to you");
                 sendNotification(dataMap);
             }
         });
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         if(!is_registered){
             Toast.makeText(this, "Not registered!", Toast.LENGTH_SHORT).show();
             if(Constants.cheat_login){
-                preferences.edit().putString("user_email", Constants.cheat_email).commit();
+                preferences.edit().putString("user_email", Constants.cheat_email).apply();
             }
             else{
                 Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
@@ -142,27 +142,40 @@ public class MainActivity extends AppCompatActivity {
     private void sendNotification(Map<String, String> dataMap){
 
         Intent intent = new Intent(this, MainActivity.class);
-        Intent registerIntent = new Intent(MainActivity.this, RegisterActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, registerIntent,
+
+        Intent registerIntent = new Intent(MainActivity.this, RegisterActivity.class);
+        registerIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent registerPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, registerIntent,
                 PendingIntent.FLAG_CANCEL_CURRENT);
 
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        // defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "MY_channel")
+                // Show notification even on lock screen
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
-                //.addAction(R.drawable.ic_launcher_foreground, "Pause", pendingIntent)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), android.R.drawable.ic_dialog_info)) // acquire an external resource by using URI(Uniform Resource Identifier)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                // use custom mp3 sound file (./res/raw/siren.mp3)
+                .setSound(Uri.parse("android.resource://"
+                        + getApplicationContext().getPackageName() + "/" + R.raw.siren))
+                // off-vibrate time(ms), on-vibrate time, off time, on time, off, on, ...
+                .setVibrate(new long[] {500, 3000, 500, 3000})
+                // Icon size
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), drawable.ic_dialog_alert)) // acquire an external resource by using URI(Uniform Resource Identifier)
+                .setSmallIcon(R.mipmap.ic_launcher) // using mipmap, produce smaller icon
+                // Contents
                 .setContentTitle(dataMap.get("title"))
                 .setContentText(dataMap.get("content"))
+                // When a user expands(slide down) original sized notification(above contents), show more info
+                .setStyle(new NotificationCompat.BigTextStyle()
+                .bigText("So I say to you: Ask and it will be given to you; seek and you will find; knock and the door will be opened to you. _Luke11:9"))
+                // If user click the notification,
+                .setContentIntent(registerPendingIntent)
                 .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                //.setVibrate(new long[] {1000,1000,1000 })
-                .addAction(drawable.ic_menu_view, "REGISTER", pendingIntent)
-                .addAction(drawable.ic_delete, "DELETE", null);
-                //.setFullScreenIntent(pendingIntent, true);
+                // If user click a button after expanding the notification
+                .addAction(new NotificationCompat.Action(R.drawable.common_google_signin_btn_text_dark, "Register", registerPendingIntent))
+                .addAction(new NotificationCompat.Action(R.drawable.common_google_signin_btn_text_dark, "Enter", registerPendingIntent));
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        assert notificationManager != null;
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
 }
