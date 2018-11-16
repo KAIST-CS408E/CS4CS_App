@@ -42,6 +42,12 @@
             android:textAlignment="center"
             android:textSize="18sp" />
 
+        <Switch
+            android:id="@+id/official_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="I am an offical" />
+
         <Button
             android:id="@+id/button_map"
             android:layout_width="match_parent"
