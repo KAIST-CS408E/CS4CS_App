@@ -147,7 +147,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         setContentView(R.layout.activity_map);
 
         Button ok_button = findViewById(R.id.ok);
-        Button cancle_button = findViewById(R.id.cancle);
+        Button cancel_button = findViewById(R.id.cancel);
         Button send_button = findViewById(R.id.send);
 
         SeekBar seekBar = findViewById(R.id.seekBar);
@@ -188,7 +188,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             }
         });
 
-        cancle_button.setOnClickListener(new View.OnClickListener() {
+        cancel_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -242,7 +242,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         block_map_click = true;
 
         findViewById(R.id.ok).setVisibility(View.VISIBLE);
-        findViewById(R.id.cancle).setVisibility(View.VISIBLE);
+        findViewById(R.id.cancel).setVisibility(View.VISIBLE);
 
         return false;
     }

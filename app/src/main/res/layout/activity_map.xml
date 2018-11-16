@@ -67,12 +67,12 @@
                     android:text="SEND" />
 
                 <Button
-                    android:id="@+id/cancle"
-                    android:visibility="invisible"
-                    android:layout_marginLeft="20dp"
+                    android:id="@+id/cancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="CANCLE" />
+                    android:layout_marginLeft="20dp"
+                    android:text="CANCEL"
+                    android:visibility="invisible" />
 
             </LinearLayout>
 
