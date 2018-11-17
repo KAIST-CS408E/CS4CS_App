@@ -20,11 +20,15 @@ import com.example.cs408_app.Config.Constants;
 import com.example.cs408_app.Model.Alarm;
 import com.example.cs408_app.Model.Response;
 
+import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -52,11 +56,34 @@ public class SendReportActivity extends AppCompatActivity {
         call.enqueue(new Callback<Response>() {
             @Override
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                if(response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                // if the response is successful
+                if (response.isSuccessful() && response.body() != null && response.code() == 201) {
+                    Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
                 }
-                else{
-                    Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                // if the response is not successful (then app receives intended error message)
+                else if (!response.isSuccessful() && response.errorBody() != null) {
+                    Converter<ResponseBody, Response> errorConverter =
+                            retrofit.responseBodyConverter(Response.class, new Annotation[0]);
+
+                    try {
+                        Response error = errorConverter.convert(response.errorBody());
+                        // show the error message
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getApplicationContext(), "Something wrong, please try again !", Toast.LENGTH_LONG).show();
+                    }
+
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                }
+
+                else {
+                    Toast.makeText(getApplicationContext(), "Unknown error" , Toast.LENGTH_LONG).show();
                 }
             }
 

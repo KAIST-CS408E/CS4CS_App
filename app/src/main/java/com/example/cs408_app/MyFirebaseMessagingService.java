@@ -110,7 +110,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentText(data.get("body"))
                 // When a user expands(slide down) original sized notification(above contents), show more info
                 .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText("So I say to you: Ask and it will be given to you; seek and you will find; knock and the door will be opened to you. _Luke11:9"))
+                        .bigText(data.get("body")))
                 // If user click the notification,
                 .setContentIntent(registerPendingIntent)
                 .setAutoCancel(true)
