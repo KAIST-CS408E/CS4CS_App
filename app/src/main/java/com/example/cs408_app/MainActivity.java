@@ -17,6 +17,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.R.drawable;
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button button;
+        Switch officialSw;
 
         // Retrieve and hold the contents of the preferences file "register"
         preferences = getSharedPreferences("register", MODE_PRIVATE); // can be edited by this app exclusively
@@ -164,6 +167,16 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "logged in", Toast.LENGTH_SHORT).show();
         }
 
+
+        officialSw = findViewById(R.id.official_switch);
+        final Boolean is_official = preferences.getBoolean("is_official", false);
+        officialSw.setChecked(is_official);
+        officialSw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                preferences.edit().putBoolean("is_official", b).apply();
+            }
+        });
     }
 
     @Override

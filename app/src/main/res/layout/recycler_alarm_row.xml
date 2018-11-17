@@ -11,7 +11,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:text="title"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/text_desc"
@@ -20,7 +21,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:text="desc"
-        android:textSize="20sp" />
+        android:textSize="14sp" />
     <View
         android:layout_marginTop="8dp"
         android:layout_width="match_parent"
