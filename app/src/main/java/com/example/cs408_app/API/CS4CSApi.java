@@ -43,9 +43,9 @@ public interface CS4CSApi {
     @GET("/")
     Call<Response> welcomeMsg();
 
-    @POST("/alarm")
+    @POST("/alarm/report")
     Call<Response> postAlarm(@Body Alarm alarm);
 
-    @GET("/alarmlist")
+    @GET("/alarm/get_list")
     Call<List<AlarmElement>> getAlarmList();
 }
