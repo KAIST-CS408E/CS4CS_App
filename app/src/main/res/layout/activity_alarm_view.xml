@@ -88,7 +88,7 @@
         android:layout_marginStart="8dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include" />
+        app:layout_constraintTop_toBottomOf="@+id/include_reporter_info" />
 
     <TextView
         android:id="@+id/text_cat"
@@ -101,7 +101,7 @@
         app:layout_constraintTop_toBottomOf="@+id/text_date" />
 
     <include
-        android:id="@+id/include"
+        android:id="@+id/include_reporter_info"
         layout="@layout/reporter_info"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

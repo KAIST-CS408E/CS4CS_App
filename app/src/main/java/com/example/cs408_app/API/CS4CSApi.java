@@ -48,4 +48,7 @@ public interface CS4CSApi {
 
     @GET("/alarm/get_list")
     Call<List<AlarmElement>> getAlarmList();
+
+    @GET("/alarm/reporter/{alarm_id}")
+    Call<User> getReporter(@Path("alarm_id") String alarm_id);
 }
