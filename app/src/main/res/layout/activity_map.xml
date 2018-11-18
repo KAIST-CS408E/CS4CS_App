@@ -86,6 +86,25 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="30dp" />
 
+            <TextView
+                android:id="@+id/start"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/seekBar"
+                android:layout_alignParentLeft="true"
+                android:text="0m" />
+
+            <TextView
+                android:id="@+id/end"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/seekBar"
+                android:layout_alignParentRight="true"
+                android:text="100m" />
+
+
         </RelativeLayout>
     </LinearLayout>
 

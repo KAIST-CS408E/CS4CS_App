@@ -188,6 +188,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 view.setVisibility(View.GONE);
                 findViewById(R.id.seekBar).setVisibility(View.VISIBLE);
                 findViewById(R.id.send).setVisibility(View.VISIBLE);
+                findViewById(R.id.start).setVisibility(View.VISIBLE);
+                findViewById(R.id.end).setVisibility(View.VISIBLE);
 
                 circle = mMap.addCircle(new CircleOptions()
                         .center(mMarker.getPosition()).radius(50)
@@ -206,6 +208,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 findViewById(R.id.ok).setVisibility(View.INVISIBLE);
                 findViewById(R.id.send).setVisibility(View.GONE);
                 findViewById(R.id.seekBar).setVisibility(View.INVISIBLE);
+                findViewById(R.id.start).setVisibility(View.INVISIBLE);
+                findViewById(R.id.end).setVisibility(View.INVISIBLE);
 
                 if (circle != null)
                     circle.remove();
