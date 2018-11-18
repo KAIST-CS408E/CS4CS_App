@@ -1,12 +1,15 @@
 package com.example.cs408_app;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.cs408_app.API.CS4CSApi;
@@ -26,11 +29,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AlarmViewActivity extends AppCompatActivity {
 
-    TextView textView;
+
     AlarmElement oAlarm;
     SharedPreferences preferences;
     private CS4CSApi apiService;
     private Retrofit retrofit;
+
+    TextView textView;
+    Button callBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +64,7 @@ public class AlarmViewActivity extends AppCompatActivity {
         View v = (View)findViewById(R.id.include_reporter_info);
         if(is_official){
             textView = (TextView) v.findViewById(R.id.reporter_name);
+            callBtn = (Button) v.findViewById(R.id.button_call_reporter);
             displayReporterProfile(oAlarm.get_id());
         }
         else{
@@ -74,7 +81,16 @@ public class AlarmViewActivity extends AppCompatActivity {
         call.enqueue(new Callback<UserProfile>() {
             @Override
             public void onResponse(Call<UserProfile> call, Response<UserProfile> response) {
-                textView.setText(response.body().getName());
+                final UserProfile reporter = response.body();
+                textView.setText(reporter.getName());
+                callBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String phone = reporter.getPhone_number();
+                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
+                        startActivity(intent);
+                    }
+                });
             }
 
             @Override
