@@ -3,6 +3,7 @@ import com.example.cs408_app.Model.Alarm;
 import com.example.cs408_app.Model.AlarmElement;
 import com.example.cs408_app.Model.Response;
 import com.example.cs408_app.Model.User;
+import com.example.cs408_app.Model.UserProfile;
 
 import java.util.List;
 
@@ -50,5 +51,5 @@ public interface CS4CSApi {
     Call<List<AlarmElement>> getAlarmList();
 
     @GET("/alarm/reporter/{alarm_id}")
-    Call<User> getReporter(@Path("alarm_id") String alarm_id);
+    Call<UserProfile> getReporterProfile(@Path("alarm_id") String alarm_id);
 }
