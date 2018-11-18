@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -109,9 +111,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 public void onComplete(@NonNull Task task) {
 
                     if(task.isSuccessful()){
+
                         Location currentLocation = (Location) task.getResult();
-                        Double lat = currentLocation.getLatitude();
-                        Double lng = currentLocation.getLongitude();
+                        Double lat = 36.372, lng = 127.363;
+
+                        if (currentLocation != null) {
+                            lat = currentLocation.getLatitude();
+                            lng = currentLocation.getLongitude();
+                        }
 
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat,lng), DEFAULT_ZOOM));
                     }
@@ -199,7 +206,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 findViewById(R.id.ok).setVisibility(View.INVISIBLE);
                 findViewById(R.id.send).setVisibility(View.GONE);
                 findViewById(R.id.seekBar).setVisibility(View.INVISIBLE);
-                
+
                 if (circle != null)
                     circle.remove();
 
