@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cs408_app.API.CS4CSApi;
@@ -36,9 +38,11 @@ public class SendReportActivity extends AppCompatActivity {
     Button report_btn;
     EditText titleText;
     EditText descText;
-    RadioGroup category;
+    RadioGroup category, category2;
     CS4CSApi apiService;
     Retrofit retrofit;
+
+    private boolean isChecking = true;
 
 
     SharedPreferences preferences;
@@ -104,6 +108,7 @@ public class SendReportActivity extends AppCompatActivity {
         report_btn = findViewById(R.id.button_report);
         titleText = (EditText) findViewById(R.id.title_input);
         category = (RadioGroup) findViewById(R.id.category);
+        category2 = (RadioGroup) findViewById(R.id.category2);
         descText = (EditText) findViewById(R.id.desc_input);
 
         retrofit = new Retrofit.Builder()
@@ -115,6 +120,27 @@ public class SendReportActivity extends AppCompatActivity {
         geo_lng = intent.getDoubleExtra("Longitude", 0);
         geo_rad = intent.getDoubleExtra("Radius", 0);
 
+        category.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if (i != -1 && isChecking) {
+                    isChecking = false;
+                    category2.clearCheck();
+                }
+                isChecking = true;
+            }
+        });
+
+        category2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if (i != -1 && isChecking) {
+                    isChecking = false;
+                    category.clearCheck();
+                }
+                isChecking = true;
+            }
+        });
 
         report_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,18 +153,45 @@ public class SendReportActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
+                        boolean cancel = false;
+                        View focusView = null;
                         String title = titleText.getText().toString();
-                        int cat_id = category.getCheckedRadioButtonId();
-                        RadioButton r = (RadioButton) category.findViewById(cat_id);
-                        String cat_str = r.getText().toString();
                         String desc = descText.getText().toString();
+                        int cat_id = -1;
 
-                        // send alert
-                        String reporter = preferences.getString("user_email", "UNVERIFIED");
-                        Alarm alarm = new Alarm(geo_lat, geo_lng, geo_rad, title, cat_str, desc, reporter);
-                        postData(alarm);
-                        finish();
-                        dialogInterface.dismiss();
+                        // Sanity Check: whether it is blank or not
+                        if (TextUtils.isEmpty(title)) {
+                            titleText.setError(getString(R.string.error_field_required));
+                            focusView = titleText;
+                            cancel = true;
+                        }
+
+                        // Category Radio Button Groups
+                        RadioButton r = null;
+                        if (category.getCheckedRadioButtonId() != -1) { // First row of radio group
+                            cat_id = category.getCheckedRadioButtonId();
+                            r = category.findViewById(cat_id);
+                        } else if (category2.getCheckedRadioButtonId() != -1) { // Second row of radio group
+                            cat_id = category2.getCheckedRadioButtonId();
+                            r = category2.findViewById(cat_id);
+                        } else {
+                            Toast.makeText(SendReportActivity.this, "Please check the one of categories", Toast.LENGTH_SHORT).show();
+                            cancel = true;
+                        }
+
+                        if (cancel) {
+                            if (focusView != null)
+                                focusView.requestFocus();
+                        } else {
+                            String cat_str = r.getText().toString();
+                            // send alert
+                            String reporter = preferences.getString("user_email", "UNVERIFIED");
+                            Alarm alarm = new Alarm(geo_lat, geo_lng, geo_rad, title, cat_str, desc, reporter);
+                            postData(alarm);
+
+                            finish();
+                            dialogInterface.dismiss();
+                        }
                     }
                 });
 

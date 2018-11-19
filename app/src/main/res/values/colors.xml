@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="border">#80F46542</color>
+    <color name="warning">#E0161c</color>
+    <color name="colorHeader">#2296F3</color>
+    <color name="confirm">#3A5ACE</color>
 </resources>
