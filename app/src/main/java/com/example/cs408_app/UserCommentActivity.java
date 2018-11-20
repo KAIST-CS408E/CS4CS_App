@@ -153,7 +153,7 @@ public class UserCommentActivity extends AppCompatActivity {
             try {
                 a_date = format.parse(a.getCreated_at());
                 b_date = format.parse(b.getCreated_at());
-                return (a_date.getTime() > b_date.getTime()) ? -1 : (a_date.getTime() < b_date.getTime()) ? 1 : 0;
+                return (a_date.getTime() > b_date.getTime()) ? 1 : (a_date.getTime() < b_date.getTime()) ? -1 : 0;
             } catch (ParseException e) {
                 e.printStackTrace();
                 return 0;
