@@ -2,6 +2,7 @@ package com.example.cs408_app.API;
 import com.example.cs408_app.Model.Alarm;
 import com.example.cs408_app.Model.AlarmElement;
 import com.example.cs408_app.Model.Comment;
+import com.example.cs408_app.Model.CommentElement;
 import com.example.cs408_app.Model.Response;
 import com.example.cs408_app.Model.User;
 import com.example.cs408_app.Model.UserProfile;
@@ -57,5 +58,8 @@ public interface CS4CSApi {
     /* Comment API */
     @POST("/comment/make/{alarm_id}")
     Call<Response> makeComment(@Body Comment comment, @Path("alarm_id") String alarm_id);
+
+    @GET("/comment/get_list/{alarm_id}")
+    Call<List<CommentElement>> getCommentList(@Path("alarm_id") String alarm_id);
 
 }

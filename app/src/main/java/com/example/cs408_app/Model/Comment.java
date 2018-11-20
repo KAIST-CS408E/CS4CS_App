@@ -1,10 +1,10 @@
 package com.example.cs408_app.Model;
 
 public class Comment {
-    String author, content;
+    String author, contents;
 
-    public Comment(String author, String content){
+    public Comment(String author, String contents){
         this.author = author;
-        this.content = content;
+        this.contents = contents;
     }
 }
