@@ -37,6 +37,7 @@ public class AlarmViewActivity extends AppCompatActivity {
 
     TextView textView;
     Button callBtn;
+    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,18 @@ public class AlarmViewActivity extends AppCompatActivity {
             v.setVisibility(View.GONE);
         }
 
+        //comment activity
+        button = findViewById(R.id.button_comment);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), UserCommentActivity.class);
+                Bundle args = new Bundle();
+                args.putSerializable("alarm", oAlarm);
+                intent.putExtras(args);
+                startActivity(intent);
+            }
+        });
     }
 
     private void displayReporterProfile(String alarm_id){

@@ -1,6 +1,7 @@
 package com.example.cs408_app.API;
 import com.example.cs408_app.Model.Alarm;
 import com.example.cs408_app.Model.AlarmElement;
+import com.example.cs408_app.Model.Comment;
 import com.example.cs408_app.Model.Response;
 import com.example.cs408_app.Model.User;
 import com.example.cs408_app.Model.UserProfile;
@@ -52,4 +53,9 @@ public interface CS4CSApi {
 
     @GET("/alarm/reporter/{alarm_id}")
     Call<UserProfile> getReporterProfile(@Path("alarm_id") String alarm_id);
+
+    /* Comment API */
+    @POST("/comment/make/{alarm_id}")
+    Call<Response> makeComment(@Body Comment comment, @Path("alarm_id") String alarm_id);
+
 }
