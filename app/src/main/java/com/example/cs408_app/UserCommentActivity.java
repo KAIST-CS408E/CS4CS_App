@@ -76,7 +76,7 @@ public class UserCommentActivity extends AppCompatActivity {
         Bundle args = getIntent().getExtras();
         oAlarm = (AlarmElement) args.getSerializable("alarm");
 
-        textView = findViewById(R.id.text_title);
+        textView = findViewById(R.id.text_name);
         textView.setText(oAlarm.getTitle());
 
         editText = findViewById(R.id.text_comment);

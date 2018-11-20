@@ -46,7 +46,7 @@ public class AlarmRecyclerAdapter extends RecyclerView.Adapter<AlarmRecyclerAdap
         public TextView title, desc;
         public ViewHolder(View itemView){
             super(itemView);
-            title = itemView.findViewById(R.id.text_title);
+            title = itemView.findViewById(R.id.text_name);
             desc = itemView.findViewById(R.id.text_desc);
 
             itemView.setOnClickListener(new View.OnClickListener() {
