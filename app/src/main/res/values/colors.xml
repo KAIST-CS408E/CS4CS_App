@@ -7,4 +7,15 @@
     <color name="warning">#E0161c</color>
     <color name="colorHeader">#4285F4</color>
     <color name="confirm">#3A5ACE</color>
+
+    <color name="colorFillBlank">#E25E64</color>
+    <color name="colorTextHint">#ABABAB</color>
+    <color name="colorSetHere">#31579E</color>
+    <color name="colorBackground">#ED3132</color>
+    <color name="colorStatusBar">#ED3132</color>
+    <color name="colorEdge">#566067</color>
+    <color name="colorUpVote">#FF9500</color>
+    <color name="colorWhiteButton">#FFFFFF</color>
+    <color name="colorBackGrndWhite">#F0EFF4</color>
+    <color name="colorTranspaRed">#EF4546</color>
 </resources>
