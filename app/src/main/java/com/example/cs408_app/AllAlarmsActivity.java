@@ -76,7 +76,7 @@ public class AllAlarmsActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged(); // any View reflecting the data has been changed should refresh itself
 
         swipeContainer = findViewById(R.id.swipeRefreshLayout);
-        swipeContainer.setColorSchemeColors(getResources().getColor(android.R.color.holo_green_light));
+        swipeContainer.setColorSchemeColors(getResources().getColor(android.R.color.holo_blue_dark));
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -115,9 +115,13 @@ public class AllAlarmsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Definition of "which is the first alarm post, second, .."
+     */
     class sortByCreatedAt implements Comparator<AlarmElement> {
         @Override
         public int compare(AlarmElement a, AlarmElement b) {
+            // Uploaded date of an alarm post
             Date a_date, b_date;
 
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.KOREA);
