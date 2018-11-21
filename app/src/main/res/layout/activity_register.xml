@@ -33,7 +33,7 @@
             android:id="@+id/header2"
             android:layout_width="0dp"
             android:layout_height="60dp"
-            android:background="@color/colorBackground"
+            android:background="@drawable/header_gradient"
             android:minHeight="0dp"
             android:paddingTop="0dp"
             app:layout_constraintEnd_toEndOf="parent"
