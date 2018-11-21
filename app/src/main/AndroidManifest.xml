@@ -81,6 +81,10 @@
             android:name=".AlarmViewActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".UserCommentActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service
             android:name=".MyFirebaseMessagingService">

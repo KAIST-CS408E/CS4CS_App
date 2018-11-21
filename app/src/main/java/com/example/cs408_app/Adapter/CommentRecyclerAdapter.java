@@ -11,30 +11,32 @@ import android.widget.TextView;
 
 import com.example.cs408_app.AlarmViewActivity;
 import com.example.cs408_app.Model.AlarmElement;
+import com.example.cs408_app.Model.Comment;
+import com.example.cs408_app.Model.CommentElement;
 import com.example.cs408_app.R;
 
 import java.util.List;
 
-public class AlarmRecyclerAdapter extends RecyclerView.Adapter<AlarmRecyclerAdapter.ViewHolder>{
+public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecyclerAdapter.ViewHolder>{
 
-    private List<AlarmElement> item;
+    private List<CommentElement> item;
     Context context;
 
-    public AlarmRecyclerAdapter(Context context, List<AlarmElement> item){
+    public CommentRecyclerAdapter(Context context, List<CommentElement> item){
         this.item = item;
         this.context = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.recycler_alarm_row, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.recycler_comment_row, null);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.title.setText(item.get(position).getTitle());
-        holder.desc.setText(item.get(position).getDesc());
+        holder.name.setText(item.get(position).getAuthor().getName());
+        holder.contents.setText(item.get(position).getContents());
     }
 
     @Override
@@ -43,25 +45,19 @@ public class AlarmRecyclerAdapter extends RecyclerView.Adapter<AlarmRecyclerAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView title, desc;
+        public TextView name, contents;
         public ViewHolder(View itemView){
             super(itemView);
-            title = itemView.findViewById(R.id.text_name);
-            desc = itemView.findViewById(R.id.text_desc);
+            name = itemView.findViewById(R.id.text_name);
+            contents = itemView.findViewById(R.id.text_contents);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        AlarmElement selected = item.get(position);
-
-                        Intent intent = new Intent(context, AlarmViewActivity.class);
-
-                        Bundle args = new Bundle();
-                        args.putSerializable("alarm", selected);
-                        intent.putExtras(args);
-                        context.startActivity(intent);
+                        CommentElement selected = item.get(position);
+                        // do something
                     }
                 }
             });

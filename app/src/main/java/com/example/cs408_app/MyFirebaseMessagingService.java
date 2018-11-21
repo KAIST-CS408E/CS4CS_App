@@ -74,6 +74,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         Map<String, String> data = remoteMessage.getData();
 
+        Log.e(TAG, data.get("title"));
+        Log.e(TAG, data.get("body"));
         /**
          * Notification Channel
          */

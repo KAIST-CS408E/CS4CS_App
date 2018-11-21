@@ -5,21 +5,15 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.cs408_app.API.CS4CSApi;
-import com.example.cs408_app.Adapter.AlarmRecyclerAdapter;
 import com.example.cs408_app.Config.Constants;
 import com.example.cs408_app.Model.AlarmElement;
-import com.example.cs408_app.Model.User;
 import com.example.cs408_app.Model.UserProfile;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,6 +31,7 @@ public class AlarmViewActivity extends AppCompatActivity {
 
     TextView textView;
     Button callBtn;
+    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +43,7 @@ public class AlarmViewActivity extends AppCompatActivity {
 
         oAlarm = (AlarmElement) args.getSerializable("alarm");
 
-        textView = findViewById(R.id.text_title);
+        textView = findViewById(R.id.text_name);
         textView.setText(oAlarm.getTitle());
 
         textView = findViewById(R.id.text_desc);
@@ -71,6 +66,18 @@ public class AlarmViewActivity extends AppCompatActivity {
             v.setVisibility(View.GONE);
         }
 
+        //comment activity
+        button = findViewById(R.id.button_comment);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), UserCommentActivity.class);
+                Bundle args = new Bundle();
+                args.putSerializable("alarm", oAlarm);
+                intent.putExtras(args);
+                startActivity(intent);
+            }
+        });
     }
 
     private void displayReporterProfile(String alarm_id){
