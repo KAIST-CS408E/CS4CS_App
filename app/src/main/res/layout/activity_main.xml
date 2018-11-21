@@ -8,12 +8,6 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <include
-        layout="@layout/app_bar_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <!--
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
@@ -22,114 +16,123 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_m"
         app:menu="@menu/activity_main_drawer" />
-    -->
+
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/linearLayout">
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/header4"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="@color/colorBackground"
+            android:minHeight="0dp"
+            android:paddingTop="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title="@string/app_name"
+            app:titleTextColor="@color/colorWhiteButton">
+
+        </android.support.v7.widget.Toolbar>
 
         <TextView
             android:id="@+id/text_user"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="CURRENT USER UNKNOWN"
             android:textAlignment="center"
             android:textSize="18sp"
-            tools:layout_conversion_absoluteHeight="25dp"
-            tools:layout_editor_absoluteY="0dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_conversion_absoluteWidth="360dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header4" />
 
         <Switch
             android:id="@+id/official_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
             android:text="I am an offical"
-            tools:layout_conversion_absoluteHeight="27dp"
-            tools:layout_editor_absoluteY="25dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_conversion_absoluteWidth="360dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_user" />
 
         <Button
             android:id="@+id/button_map"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Go to map"
-            tools:layout_conversion_absoluteHeight="48dp"
-            tools:layout_editor_absoluteY="52dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_conversion_absoluteWidth="360dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/official_switch" />
 
         <Button
             android:id="@+id/button_report"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Report"
-            tools:layout_conversion_absoluteHeight="48dp"
-            tools:layout_editor_absoluteY="100dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_conversion_absoluteWidth="360dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_map" />
 
         <Button
             android:id="@+id/button_server_connection_test"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Server Connection Test"
-            tools:layout_conversion_absoluteHeight="48dp"
-            tools:layout_editor_absoluteY="148dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_conversion_absoluteWidth="360dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_report" />
 
         <Button
             android:id="@+id/button_register"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Sign Up"
-            tools:layout_conversion_absoluteHeight="48dp"
-            tools:layout_editor_absoluteY="196dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_conversion_absoluteWidth="360dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_server_connection_test" />
 
         <Button
             android:id="@+id/button_all_alarms"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="VIEW ALL ALARMS"
-            tools:layout_conversion_absoluteHeight="48dp"
-            tools:layout_editor_absoluteY="244dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_conversion_absoluteWidth="360dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_register" />
 
         <Button
             android:id="@+id/button_test_self_alarm"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="[Test]Push Self Alarm"
-            tools:layout_conversion_absoluteHeight="48dp"
-            tools:layout_editor_absoluteY="292dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_conversion_absoluteWidth="360dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_all_alarms" />
 
         <Button
             android:id="@+id/not_alarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="31dp"
             android:text="DeclineAlarm"
-            tools:layout_conversion_absoluteHeight="48dp"
-            tools:layout_editor_absoluteY="371dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_conversion_absoluteWidth="126dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_test_self_alarm" />
 
         <Button
             android:id="@+id/alarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="79dp"
+            android:layout_marginBottom="69dp"
             android:text="ReceiveAlarm"
-            tools:layout_conversion_absoluteHeight="48dp"
-            tools:layout_editor_absoluteY="450dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_conversion_absoluteWidth="125dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/not_alarm" />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v4.widget.DrawerLayout>
