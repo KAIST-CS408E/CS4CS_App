@@ -18,11 +18,11 @@
             android:id="@+id/pictogram"
             android:layout_width="95dp"
             android:layout_height="95dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:src="@android:drawable/ic_menu_help"
-            app:layout_constraintEnd_toStartOf="@+id/text_desc"
+            app:layout_constraintEnd_toStartOf="@+id/space3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_cat" />
 
@@ -37,13 +37,30 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/header4" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/header4"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="@drawable/header_gradient"
+            android:minHeight="0dp"
+            android:paddingTop="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title="Alert Information"
+            app:titleTextColor="@color/colorWhiteButton">
+
+        </android.support.v7.widget.Toolbar>
 
         <TextView
             android:id="@+id/text_name"
             android:layout_width="226dp"
             android:layout_height="41dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
             android:text="This is the title"
             android:textSize="30sp"
@@ -53,25 +70,25 @@
 
         <Button
             android:id="@+id/button_comment"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/ic_comment_black_24dp"
-            app:layout_constraintEnd_toStartOf="@+id/button5"
+            app:layout_constraintEnd_toStartOf="@+id/space2"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider4" />
+            app:layout_constraintTop_toTopOf="@+id/divider7" />
 
         <Button
             android:id="@+id/button5"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/ic_announcement_black_24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button_comment"
-            app:layout_constraintTop_toBottomOf="@+id/divider4" />
+            app:layout_constraintStart_toEndOf="@+id/space2"
+            app:layout_constraintTop_toTopOf="@+id/divider7" />
 
         <Space
             android:id="@+id/space"
@@ -86,20 +103,23 @@
 
         <TextView
             android:id="@+id/text_desc"
-            android:layout_width="289dp"
+            android:layout_width="244dp"
             android:layout_height="139dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:scrollbars="vertical"
             android:text="This is the description"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/space3"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         <TextView
             android:id="@+id/text_date"
             android:layout_width="193dp"
             android:layout_height="18dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:text="TextView"
             app:layout_constraintStart_toStartOf="parent"
@@ -109,12 +129,15 @@
             android:id="@+id/text_cat"
             android:layout_width="95dp"
             android:layout_height="20dp"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:text="TextView"
             android:textAlignment="center"
             android:textSize="16sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/space3"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/include_reporter_info" />
 
@@ -122,7 +145,7 @@
             android:id="@+id/include_reporter_info"
             layout="@layout/reporter_info"
             android:layout_width="0dp"
-            android:layout_height="96dp"
+            android:layout_height="92dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
@@ -159,20 +182,22 @@
             android:id="@+id/textView2"
             android:layout_width="116dp"
             android:layout_height="21dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="176dp"
+            android:layout_marginEnd="8dp"
             android:text="Accident Info"
             android:textAlignment="center"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/space4"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/space3"
             app:layout_constraintTop_toBottomOf="@+id/include_reporter_info" />
 
         <TextView
             android:id="@+id/textView9"
             android:layout_width="0dp"
             android:layout_height="31dp"
-            android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:text="Comment"
             android:textAlignment="center"
@@ -183,13 +208,12 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_comment"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.424" />
 
         <TextView
             android:id="@+id/textView11"
             android:layout_width="0dp"
             android:layout_height="31dp"
-            android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:text="Announcement"
             android:textAlignment="center"
@@ -200,7 +224,53 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/textView9"
             app:layout_constraintTop_toBottomOf="@+id/button5"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.42000002" />
+
+        <Space
+            android:id="@+id/space2"
+            android:layout_width="wrap_content"
+            android:layout_height="17dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button5"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_comment"
+            app:layout_constraintTop_toTopOf="@+id/divider7" />
+
+        <View
+            android:id="@+id/divider7"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/colorEdge"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider4" />
+
+        <Space
+            android:id="@+id/space3"
+            android:layout_width="13dp"
+            android:layout_height="139dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/textView2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/text_cat"
+            app:layout_constraintTop_toBottomOf="@+id/include_reporter_info" />
+
+        <Space
+            android:id="@+id/space4"
+            android:layout_width="104dp"
+            android:layout_height="19dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/include_reporter_info" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>
