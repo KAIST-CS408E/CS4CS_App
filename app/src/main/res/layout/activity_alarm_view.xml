@@ -12,6 +12,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorBackGrndWhite"
         tools:layout_editor_absoluteY="25dp">
 
         <ImageView
@@ -29,11 +30,8 @@
         <fragment
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="230dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_width="0dp"
+            android:layout_height="232dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,13 +56,14 @@
 
         <TextView
             android:id="@+id/text_name"
-            android:layout_width="226dp"
+            android:layout_width="0dp"
             android:layout_height="41dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
             android:text="This is the title"
             android:textSize="30sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_date" />
 
@@ -103,11 +102,11 @@
 
         <TextView
             android:id="@+id/text_desc"
-            android:layout_width="244dp"
+            android:layout_width="217dp"
             android:layout_height="139dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:scrollbars="vertical"
             android:text="This is the description"
             android:textSize="18sp"
@@ -118,9 +117,9 @@
         <TextView
             android:id="@+id/text_date"
             android:layout_width="193dp"
-            android:layout_height="18dp"
+            android:layout_height="19dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:text="TextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/map" />
@@ -145,9 +144,9 @@
             android:id="@+id/include_reporter_info"
             layout="@layout/reporter_info"
             android:layout_width="0dp"
-            android:layout_height="92dp"
+            android:layout_height="106dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -174,7 +173,6 @@
             android:layout_marginEnd="8dp"
             android:background="@color/colorEdge"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_desc" />
 
