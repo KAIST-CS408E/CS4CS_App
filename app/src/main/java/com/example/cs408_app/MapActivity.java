@@ -41,7 +41,7 @@ import com.google.android.gms.tasks.Task;
  */
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
-        GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener, SeekBar.OnSeekBarChangeListener{
+        GoogleMap.OnMapClickListener, SeekBar.OnSeekBarChangeListener{
 
     private GoogleMap mMap;
     private Marker mMarker;
@@ -232,7 +232,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
 
         mMap.setOnMapClickListener(this);
-        mMap.setOnMarkerClickListener(this);
     }
 
     @Override
@@ -244,22 +243,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
             mMarker = mMap.addMarker(new MarkerOptions()
                     .position(latLng));
+
+            mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+            mMap.getUiSettings().setAllGesturesEnabled(false);
+            mMap.getUiSettings().setZoomGesturesEnabled(true);
+            block_map_click = true;
+
+            findViewById(R.id.ok).setVisibility(View.VISIBLE);
+            findViewById(R.id.cancel).setVisibility(View.VISIBLE);
         }
     }
 
-    @Override
-    public boolean onMarkerClick(final Marker marker) {
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
-        mMap.getUiSettings().setAllGesturesEnabled(false);
-        mMap.getUiSettings().setZoomGesturesEnabled(true);
-        block_map_click = true;
-
-        findViewById(R.id.ok).setVisibility(View.VISIBLE);
-        findViewById(R.id.cancel).setVisibility(View.VISIBLE);
-
-        return false;
-    }
 
     @Override
     public void onStop () {
