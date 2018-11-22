@@ -61,6 +61,9 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecycler
                         CommentElement selected = item.get(position);
                         // do something
                         Intent intent = new Intent(context, ReplyCommentActivity.class);
+                        Bundle args = new Bundle();
+                        args.putSerializable("parent", selected);
+                        intent.putExtras(args);
                         context.startActivity(intent);
                     }
                 }
