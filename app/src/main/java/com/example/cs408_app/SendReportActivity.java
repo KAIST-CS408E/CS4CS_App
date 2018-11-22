@@ -64,7 +64,9 @@ public class SendReportActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null && response.code() == 201) {
                     Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
 
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent intent = new Intent(SendReportActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
 
@@ -82,7 +84,9 @@ public class SendReportActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Something wrong, please try again !", Toast.LENGTH_LONG).show();
                     }
 
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent intent = new Intent(SendReportActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
 
@@ -189,8 +193,8 @@ public class SendReportActivity extends AppCompatActivity {
                             Alarm alarm = new Alarm(geo_lat, geo_lng, geo_rad, title, cat_str, desc, reporter);
                             postData(alarm);
 
-                            finish();
                             dialogInterface.dismiss();
+
                         }
                     }
                 });

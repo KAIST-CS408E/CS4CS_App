@@ -35,6 +35,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.Map;
+
 
 /**
  * Created by 권태형 on 2018-11-01.
@@ -175,7 +177,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 Log.e(TAG,Double.toString(circle.getRadius()));
                 intent.putExtra("Radius", circle.getRadius());
 
-                finish();
                 startActivity(intent);
             }
         });
