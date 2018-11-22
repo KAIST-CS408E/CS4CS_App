@@ -5,6 +5,7 @@
     android:id="@+id/confirm_form"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
     android:gravity="center_horizontal"
     tools:context=".ConfirmationActivity"
     tools:layout_editor_absoluteY="25dp">
@@ -26,7 +27,7 @@
         android:id="@+id/header3"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:background="@color/colorBackground"
+        android:background="@drawable/header_gradient"
         android:minHeight="0dp"
         android:paddingTop="0dp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -11,29 +11,18 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBackGrndWhite"
+        android:background="@drawable/background_gradient"
         android:id="@+id/register_form"
         tools:context=".RegisterActivity"
         tools:layout_editor_absoluteY="25dp">
 
         <!-- Login progress -->
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/background" />
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/header2"
             android:layout_width="0dp"
             android:layout_height="60dp"
-            android:background="@color/colorBackground"
+            android:background="@drawable/header_gradient"
             android:minHeight="0dp"
             android:paddingTop="0dp"
             app:layout_constraintEnd_toEndOf="parent"
