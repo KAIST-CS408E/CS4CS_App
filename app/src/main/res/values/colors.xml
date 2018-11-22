@@ -6,7 +6,8 @@
     <color name="border">#80F46542</color>
     <color name="warning">#E0161c</color>
     <color name="colorHeader">#4285F4</color>
-    <color name="confirm">#3A5ACE</color>
+    <color name="confirm">#4444FF</color>
+    <color name="cancel">#FF4444</color>
 
     <color name="colorFillBlank">#E25E64</color>
     <color name="colorTextHint">#ABABAB</color>
@@ -18,4 +19,8 @@
     <color name="colorWhiteButton">#FFFFFF</color>
     <color name="colorBackGrndWhite">#F0EFF4</color>
     <color name="colorTranspaRed">#EF4546</color>
+
+    <color name="seek_bar_background">#ababab</color>
+    <color name="seek_bar_progress">#FF4081</color>
+    <color name="seek_bar_secondary_progress">#3399CC</color>
 </resources>
