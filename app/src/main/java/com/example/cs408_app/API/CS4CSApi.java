@@ -62,4 +62,11 @@ public interface CS4CSApi {
     @GET("/comment/get_list/{alarm_id}")
     Call<List<CommentElement>> getCommentList(@Path("alarm_id") String alarm_id);
 
+    @POST("/comment/make_reply/{alarm_id}/{comment_id}")
+    Call<Response> makeReply(@Body Comment comment, @Path("alarm_id") String alarm_id, @Path("comment_id") String comment_id);
+
+    @GET("/comment/get_list_reply/{alarm_id}/{comment_id}")
+    Call<List<CommentElement>> getReplyList(@Path("alarm_id") String alarm_id, @Path("comment_id") String comment_id);
+
+
 }

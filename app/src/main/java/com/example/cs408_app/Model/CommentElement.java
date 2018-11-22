@@ -3,13 +3,22 @@ package com.example.cs408_app.Model;
 import java.io.Serializable;
 
 public class CommentElement implements Serializable {
-    String created_at, contents;
+    String created_at, contents, _id;
     Author author;
 
-    public CommentElement(String created_at, String contents, Author author) {
+    public CommentElement(String _id, String created_at, String contents, Author author) {
+        this._id = _id;
         this.created_at = created_at;
         this.contents = contents;
         this.author = author;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getCreated_at() {

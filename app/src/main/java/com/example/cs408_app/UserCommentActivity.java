@@ -79,7 +79,7 @@ public class UserCommentActivity extends AppCompatActivity {
         textView = findViewById(R.id.text_name);
         textView.setText(oAlarm.getTitle());
 
-        editText = findViewById(R.id.text_comment);
+        editText = findViewById(R.id.text_reply);
         button = findViewById(R.id.button_reply);
 
         preferences = getSharedPreferences("register", MODE_PRIVATE); // can be edited by this app exclusively
@@ -104,11 +104,11 @@ public class UserCommentActivity extends AppCompatActivity {
     private void getCommentList(){
         recycler = findViewById(R.id.recycler);
         commentList = new ArrayList<>();
-        adapter = new CommentRecyclerAdapter(UserCommentActivity.this, commentList);
-        recycler.setLayoutManager(new LinearLayoutManager(UserCommentActivity.this));
+        adapter = new CommentRecyclerAdapter(UserCommentActivity.this, commentList, oAlarm.get_id());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(UserCommentActivity.this);
+        recycler.setLayoutManager(layoutManager);
         recycler.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-
 
         // Get comment list from the server
         try{
@@ -121,7 +121,7 @@ public class UserCommentActivity extends AppCompatActivity {
                 public void onResponse(Call<List<CommentElement>> call, Response<List<CommentElement>> response) {
                     commentList = response.body();
                     Collections.sort(commentList, new sortByCreatedAt());
-                    recycler.setAdapter(new CommentRecyclerAdapter(getApplicationContext(), commentList));
+                    recycler.setAdapter(new CommentRecyclerAdapter(getApplicationContext(), commentList, oAlarm.get_id()));
                     recycler.smoothScrollToPosition(0);
                     /*
                     if (swipeContainer.isRefreshing()){
