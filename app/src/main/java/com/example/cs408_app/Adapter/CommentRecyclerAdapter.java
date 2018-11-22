@@ -14,6 +14,8 @@ import com.example.cs408_app.Model.AlarmElement;
 import com.example.cs408_app.Model.Comment;
 import com.example.cs408_app.Model.CommentElement;
 import com.example.cs408_app.R;
+import com.example.cs408_app.ReplyCommentActivity;
+import com.example.cs408_app.UserCommentActivity;
 
 import java.util.List;
 
@@ -45,12 +47,28 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecycler
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView name, contents;
+        public TextView name, contents, replies;
         public ViewHolder(View itemView){
             super(itemView);
             name = itemView.findViewById(R.id.text_name);
             contents = itemView.findViewById(R.id.text_contents);
-
+            replies = itemView.findViewById(R.id.text_replies);
+            replies.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        CommentElement selected = item.get(position);
+                        // do something
+                        Intent intent = new Intent(context, ReplyCommentActivity.class);
+                        Bundle args = new Bundle();
+                        args.putSerializable("parent", selected);
+                        intent.putExtras(args);
+                        context.startActivity(intent);
+                    }
+                }
+            });
+            /*
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -61,6 +79,7 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecycler
                     }
                 }
             });
+            */
         }
 
 
