@@ -14,6 +14,12 @@ import com.example.cs408_app.API.CS4CSApi;
 import com.example.cs408_app.Config.Constants;
 import com.example.cs408_app.Model.AlarmElement;
 import com.example.cs408_app.Model.UserProfile;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,8 +27,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class AlarmViewActivity extends AppCompatActivity {
-
+public class AlarmViewActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     AlarmElement oAlarm;
     SharedPreferences preferences;
@@ -33,6 +38,21 @@ public class AlarmViewActivity extends AppCompatActivity {
     Button callBtn;
     Button button;
 
+    private  void initMap(){
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        Double lat = oAlarm.getLat();
+        Double lng = oAlarm.getLng();
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat,lng), 17F));
+        googleMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +62,7 @@ public class AlarmViewActivity extends AppCompatActivity {
         preferences = getSharedPreferences("register", MODE_PRIVATE);
 
         oAlarm = (AlarmElement) args.getSerializable("alarm");
+        initMap();
 
         textView = findViewById(R.id.text_name);
         textView.setText(oAlarm.getTitle());
