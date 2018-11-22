@@ -109,7 +109,7 @@ public class AlarmViewActivity extends AppCompatActivity implements OnMapReadyCa
         }
 
         //comment activity
-        button = findViewById(R.id.button_reply);
+        button = findViewById(R.id.button_comment);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
