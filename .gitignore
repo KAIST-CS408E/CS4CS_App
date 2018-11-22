@@ -10,3 +10,4 @@
 .externalNativeBuild
 .idea/misc.xml
 .idea/caches/build_file_checksums.ser
+app/src/main/java/com/example/cs408_app/Config/Constants.java
