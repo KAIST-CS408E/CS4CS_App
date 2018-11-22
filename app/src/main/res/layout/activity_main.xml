@@ -32,6 +32,7 @@
             android:id="@+id/text_user"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="CURRENT USER UNKNOWN"
             android:textAlignment="center"
             android:textSize="18sp"
@@ -44,6 +45,7 @@
             android:id="@+id/official_switch"
             android:layout_width="0dp"
             android:layout_height="30dp"
+            android:layout_marginTop="8dp"
             android:text="I am an offical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -57,53 +59,26 @@
             android:layout_marginTop="8dp"
             android:text="Go to map"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/official_switch" />
-
-        <Button
-            android:id="@+id/button_report"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Report"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_map" />
-
-        <Button
-            android:id="@+id/button_server_connection_test"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Server Connection Test"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_report" />
-
-        <Button
-            android:id="@+id/button_register"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Sign Up"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_server_connection_test" />
 
         <Button
             android:id="@+id/button_all_alarms"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="VIEW ALL ALARMS"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_register" />
+            app:layout_constraintTop_toBottomOf="@+id/button_map" />
 
         <Button
-            android:id="@+id/button_test_self_alarm"
+            android:id="@+id/button_register"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="[Test]Push Self Alarm"
+            android:layout_marginTop="8dp"
+            android:text="Sign Up"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_all_alarms" />
 
@@ -111,21 +86,23 @@
             android:id="@+id/not_alarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="31dp"
+            android:layout_marginTop="32dp"
             android:text="DeclineAlarm"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_test_self_alarm" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/alarm"
+            app:layout_constraintTop_toBottomOf="@+id/button_register" />
 
         <Button
             android:id="@+id/alarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="79dp"
-            android:layout_marginBottom="69dp"
+            android:layout_marginTop="32dp"
             android:text="ReceiveAlarm"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/not_alarm"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/not_alarm" />
+            app:layout_constraintTop_toBottomOf="@+id/button_register" />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.design.widget.NavigationView

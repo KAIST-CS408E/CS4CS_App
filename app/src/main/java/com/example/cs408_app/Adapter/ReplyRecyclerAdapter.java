@@ -9,26 +9,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.cs408_app.AlarmViewActivity;
-import com.example.cs408_app.Model.AlarmElement;
-import com.example.cs408_app.Model.Comment;
 import com.example.cs408_app.Model.CommentElement;
 import com.example.cs408_app.R;
 import com.example.cs408_app.ReplyCommentActivity;
-import com.example.cs408_app.UserCommentActivity;
 
 import java.util.List;
 
-public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecyclerAdapter.ViewHolder>{
+public class ReplyRecyclerAdapter extends RecyclerView.Adapter<ReplyRecyclerAdapter.ViewHolder>{
 
     private List<CommentElement> item;
     public String alarm_id;
     Context context;
 
-    public CommentRecyclerAdapter(Context context, List<CommentElement> item, String alarm_id){
+    public ReplyRecyclerAdapter(Context context, List<CommentElement> item){
         this.item = item;
         this.context = context;
-        this.alarm_id = alarm_id;
     }
 
     @Override
@@ -39,11 +34,8 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecycler
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        CommentElement oComment = item.get(position);
-        holder.name.setText(oComment.getAuthor().getName());
-        holder.contents.setText(oComment.getContents());
-        String suffix = holder.replies.getText().toString();
-        holder.replies.setText(String.valueOf(oComment.getNum_replies())+suffix);
+        holder.name.setText(item.get(position).getAuthor().getName());
+        holder.contents.setText(item.get(position).getContents());
     }
 
     @Override
@@ -58,22 +50,7 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecycler
             name = itemView.findViewById(R.id.text_name);
             contents = itemView.findViewById(R.id.text_contents);
             replies = itemView.findViewById(R.id.text_replies);
-            replies.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        CommentElement selected = item.get(position);
-                        // do something
-                        Intent intent = new Intent(context, ReplyCommentActivity.class);
-                        Bundle args = new Bundle();
-                        args.putSerializable("parent", selected);
-                        args.putString("alarm_id", alarm_id);
-                        intent.putExtras(args);
-                        context.startActivity(intent);
-                    }
-                }
-            });
+            replies.setVisibility(View.GONE);
             /*
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
