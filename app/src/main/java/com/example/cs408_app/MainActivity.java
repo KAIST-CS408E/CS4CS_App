@@ -137,24 +137,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        button = findViewById(R.id.button_report);
-        button.setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent = new Intent(MainActivity.this, ReportActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        button = findViewById(R.id.button_server_connection_test);
-        button.setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent = new Intent(MainActivity.this, TestActivity.class);
-                startActivity(intent);
-            }
-        });
-
         button = findViewById(R.id.button_register);
         button.setOnClickListener(new Button.OnClickListener(){
             @Override
@@ -170,20 +152,6 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AllAlarmsActivity.class);
                 startActivity(intent);
-            }
-        });
-
-        /**
-         * Test code for push alarm design
-         */
-        button = findViewById(R.id.button_test_self_alarm);
-        button.setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Map<String, String> dataMap = new HashMap<>();
-                dataMap.put("title", "Math is everywhere!!");
-                dataMap.put("content", "So I say to you");
-                sendNotification(dataMap);
             }
         });
 
@@ -276,75 +244,5 @@ public class MainActivity extends AppCompatActivity
         TextView tv = findViewById(R.id.text_user);
         String user_email = preferences.getString("user_email", "NO USER EMAIL");
         tv.setText("Current user: "+ user_email);
-    }
-
-    /**
-     * Test code for push alarm design
-     */
-
-    /**
-     * setFullScreenIntent, registerIntent
-     *
-     * : launch the registerIntent(for example) instead of posting the notification to the status bar.
-     * Only for use with extremely high-priority notifications demanding the user's immediate attention,
-     * such as an incoming phone call or alarm clock that the user has explicitly set to a particular time.
-     */
-    private void sendNotification(Map<String, String> dataMap){
-
-        /**
-         * Notification Channel
-         */
-        final int NOTIFICATION_ID = 1;
-        final String NOTIFICATION_CHANNEL_ID = "my_notification_channel";
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "My Notifications", NotificationManager.IMPORTANCE_DEFAULT);
-
-            // Configure the notification channel.
-            notificationChannel.setDescription("Channel description");
-            notificationChannel.enableLights(true);
-            notificationChannel.setLightColor(Color.RED);
-            notificationChannel.setVibrationPattern(new long[]{500, 5000, 500, 5000, 500, 5000});
-            notificationChannel.enableVibration(true);
-            notificationManager.createNotificationChannel(notificationChannel);
-        }
-
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        Intent registerIntent = new Intent(MainActivity.this, RegisterActivity.class);
-        registerIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent registerPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, registerIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT);
-
-        // defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-                // Show notification even on lock screen
-                .setVisibility(Notification.VISIBILITY_PUBLIC)
-                // use custom mp3 sound file (./res/raw/siren.mp3)
-                .setSound(Uri.parse("android.resource://"
-                        + getApplicationContext().getPackageName() + "/" + R.raw.siren))
-                // off-vibrate time(ms), on-vibrate time, off time, on time, off, on, ...
-                .setVibrate(new long[] {500, 3000, 500, 3000})
-                // Icon size
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), drawable.ic_dialog_alert)) // acquire an external resource by using URI(Uniform Resource Identifier)
-                .setSmallIcon(R.mipmap.ic_launcher) // using mipmap, produce smaller icon
-                // Contents
-                .setContentTitle(dataMap.get("title"))
-                .setContentText(dataMap.get("content"))
-                // When a user expands(slide down) original sized notification(above contents), show more info
-                .setStyle(new NotificationCompat.BigTextStyle()
-                .bigText("So I say to you: Ask and it will be given to you; seek and you will find; knock and the door will be opened to you. _Luke11:9"))
-                // If user click the notification,
-                .setContentIntent(registerPendingIntent)
-                .setAutoCancel(true)
-                // If user click a button after expanding the notification
-                .addAction(new NotificationCompat.Action(R.drawable.common_google_signin_btn_text_dark, "Register", registerPendingIntent))
-                .addAction(new NotificationCompat.Action(R.drawable.common_google_signin_btn_text_dark, "Enter", registerPendingIntent));
-
-        // notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        assert notificationManager != null;
-        notificationManager.notify(NOTIFICATION_ID /* ID of notification */, notificationBuilder.build());
     }
 }
