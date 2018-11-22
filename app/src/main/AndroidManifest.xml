@@ -14,7 +14,6 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -24,12 +23,13 @@
         android:theme="@style/AppTheme">
         <service android:name=".GeofenceIntentService" />
 
-        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <!--
+             Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -58,17 +58,17 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SendReportActivity"
-            android:windowSoftInputMode="adjustResize"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".TestActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RegisterActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:label="@string/title_activity_register" />
+            android:label="@string/title_activity_register"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ConfirmationActivity"
             android:label="@string/title_activity_confirmation"
@@ -86,8 +86,7 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <service
-            android:name=".MyFirebaseMessagingService">
+        <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

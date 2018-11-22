@@ -9,16 +9,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.location.Location;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
@@ -40,16 +48,63 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     }
 
+    private void CompareLocation(final Map<String, String> data, final Location acciLocation){
+
+        try {
+            FusedLocationProviderClient mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+            Task location = mFusedLocationProviderClient.getLastLocation();
+            location.addOnCompleteListener(new OnCompleteListener() {
+                @Override
+                public void onComplete(@NonNull Task task) {
+                    if(task.isSuccessful()){
+
+                        Location currentLocation = (Location) task.getResult();
+
+                        if (currentLocation != null){
+                            float distance = currentLocation.distanceTo(acciLocation);
+
+                            Log.e("CompareLocation", data.get("title") + " " + Float.toString(distance));
+                            if (distance < 100)
+                                sendNotification(data);
+                        }
+                        else
+                            Log.e(TAG, "Phone should turn on the location tracking");
+                    }
+                }
+            });
+
+        }catch (SecurityException e){
+            Log.e(TAG, "App should require permission");
+        }
+
+    }
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage){
 
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
+        Map<String, String> data;
+        Location acciLocation;
+        data = remoteMessage.getData();
+        Log.e("after messgae received", data.get("title"));
 
         // Check if message contains a data payload.
-        if (remoteMessage.getData().size() > 0) {
+        if (data.size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
 
-            sendNotification(remoteMessage);
+            Double lat = Double.parseDouble(data.get("lat"));
+            Double lng = Double.parseDouble(data.get("lng"));
+            //Double alt = Double.parseDouble(data.get("alt"));
+
+            if (data.get("first").equals("false")){
+                acciLocation = new Location("acciLocation");
+
+                acciLocation.setLatitude(lat);
+                acciLocation.setLongitude(lng);
+                //acciLocation.setAltitude(alt);
+                CompareLocation(data, acciLocation);
+            }
+            else
+                sendNotification(data);
         }
 
         // Check if message contains a notification payload.
@@ -58,7 +113,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
     }
 
-    private void sendNotification(RemoteMessage remoteMessage){
+    private void sendNotification(Map<String, String> data){
 
         final int NOTIFICATION_ID = 1;
         final String NOTIFICATION_CHANNEL_ID = "my_notification_channel";
@@ -72,10 +127,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         PendingIntent registerPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, registerIntent,
                 PendingIntent.FLAG_CANCEL_CURRENT);
 
-        Map<String, String> data = remoteMessage.getData();
-
-        Log.e(TAG, data.get("title"));
-        Log.e(TAG, data.get("body"));
         /**
          * Notification Channel
          */
