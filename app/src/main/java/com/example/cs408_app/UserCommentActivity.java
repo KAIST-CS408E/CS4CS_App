@@ -80,7 +80,7 @@ public class UserCommentActivity extends AppCompatActivity {
         textView.setText(oAlarm.getTitle());
 
         editText = findViewById(R.id.text_comment);
-        button = findViewById(R.id.button_comment);
+        button = findViewById(R.id.button_reply);
 
         preferences = getSharedPreferences("register", MODE_PRIVATE); // can be edited by this app exclusively
 

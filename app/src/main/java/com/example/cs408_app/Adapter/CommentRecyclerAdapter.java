@@ -14,6 +14,8 @@ import com.example.cs408_app.Model.AlarmElement;
 import com.example.cs408_app.Model.Comment;
 import com.example.cs408_app.Model.CommentElement;
 import com.example.cs408_app.R;
+import com.example.cs408_app.ReplyCommentActivity;
+import com.example.cs408_app.UserCommentActivity;
 
 import java.util.List;
 
@@ -58,7 +60,8 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecycler
                     if (position != RecyclerView.NO_POSITION) {
                         CommentElement selected = item.get(position);
                         // do something
-
+                        Intent intent = new Intent(context, ReplyCommentActivity.class);
+                        context.startActivity(intent);
                     }
                 }
             });

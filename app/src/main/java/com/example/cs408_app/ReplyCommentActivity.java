@@ -7,8 +7,7 @@ public class ReplyCommentActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comment);
-        
+        setContentView(R.layout.activity_reply_comment);
 
     }
 }

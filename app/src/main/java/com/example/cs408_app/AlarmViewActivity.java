@@ -67,7 +67,7 @@ public class AlarmViewActivity extends AppCompatActivity {
         }
 
         //comment activity
-        button = findViewById(R.id.button_comment);
+        button = findViewById(R.id.button_reply);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
