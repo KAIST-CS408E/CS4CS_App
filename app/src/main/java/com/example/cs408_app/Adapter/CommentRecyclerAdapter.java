@@ -39,8 +39,11 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecycler
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.name.setText(item.get(position).getAuthor().getName());
-        holder.contents.setText(item.get(position).getContents());
+        CommentElement oComment = item.get(position);
+        holder.name.setText(oComment.getAuthor().getName());
+        holder.contents.setText(oComment.getContents());
+        String suffix = holder.replies.getText().toString();
+        holder.replies.setText(String.valueOf(oComment.getNum_replies())+suffix);
     }
 
     @Override

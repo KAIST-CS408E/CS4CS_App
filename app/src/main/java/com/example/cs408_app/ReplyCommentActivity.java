@@ -51,7 +51,7 @@ public class ReplyCommentActivity extends AppCompatActivity {
     private RecyclerView recycler;
     ReplyRecyclerAdapter adapter;
 
-
+    String alarm_id;
     final String TAG = "ReplyCommentActivity";
 
     public void makeReply(Comment comment, final String alarm_id){
@@ -76,7 +76,7 @@ public class ReplyCommentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reply_comment);
         Bundle args = getIntent().getExtras();
         oParent = (CommentElement) args.getSerializable("parent");
-        final String alarm_id = args.getString("alarm_id");
+        alarm_id = args.getString("alarm_id");
 
         preferences = getSharedPreferences("register", MODE_PRIVATE); // can be edited by this app exclusively
 
@@ -90,6 +90,8 @@ public class ReplyCommentActivity extends AppCompatActivity {
         textView.setText(oParent.getAuthor().getName());
         textView = parentLayout.findViewById(R.id.text_contents);
         textView.setText(oParent.getContents());
+        textView = parentLayout.findViewById(R.id.text_replies);
+        textView.setVisibility(View.GONE);
 
         editText = findViewById(R.id.text_reply);
         button = findViewById(R.id.button_reply);
@@ -102,6 +104,12 @@ public class ReplyCommentActivity extends AppCompatActivity {
                 makeReply(new Comment(author, contents), alarm_id);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getReplyList(alarm_id);
     }
 
     private void getReplyList(String alarm_id){

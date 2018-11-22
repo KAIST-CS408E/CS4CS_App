@@ -88,7 +88,6 @@ public class UserCommentActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create()).baseUrl(Constants.server_ip + Constants.server_port).build();
         apiService = retrofit.create(CS4CSApi.class);
 
-        getCommentList();
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +98,12 @@ public class UserCommentActivity extends AppCompatActivity {
                 makeComment(new Comment(author, contents));
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getCommentList();
     }
 
     private void getCommentList(){
