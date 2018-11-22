@@ -14,9 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cs408_app.API.CS4CSApi;
+import com.example.cs408_app.Adapter.AnnounceRecyclerAdapter;
 import com.example.cs408_app.Adapter.CommentRecyclerAdapter;
 import com.example.cs408_app.Config.Constants;
 import com.example.cs408_app.Model.AlarmElement;
+import com.example.cs408_app.Model.Announce;
+import com.example.cs408_app.Model.AnnounceElement;
 import com.example.cs408_app.Model.Comment;
 import com.example.cs408_app.Model.CommentElement;
 
@@ -35,7 +38,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class UserCommentActivity extends AppCompatActivity {
+public class AnnounceActivity extends AppCompatActivity {
 
     AlarmElement oAlarm;
     Retrofit retrofit;
@@ -45,20 +48,20 @@ public class UserCommentActivity extends AppCompatActivity {
     Button button;
     SharedPreferences preferences;
 
-    List<CommentElement> commentList = null;
+    List<AnnounceElement> announceList = null;
     private RecyclerView recycler;
-    CommentRecyclerAdapter adapter;
+    AnnounceRecyclerAdapter adapter;
 
 
-    final String TAG = "UserCommentActivity";
+    final String TAG = "AnnounceActivity";
 
-    public void makeComment(Comment comment){
-        Call<com.example.cs408_app.Model.Response> call = apiService.makeComment(comment, oAlarm.get_id());
+    public void makeAnnounce(Announce announce){
+        Call<com.example.cs408_app.Model.Response> call = apiService.makeAnnounce(announce, oAlarm.get_id());
         call.enqueue(new Callback<com.example.cs408_app.Model.Response>() {
             @Override
-            public void onResponse(Call<com.example.cs408_app.Model.Response> call, retrofit2.Response<com.example.cs408_app.Model.Response> response) {
+            public void onResponse(Call<com.example.cs408_app.Model.Response> call, Response<com.example.cs408_app.Model.Response> response) {
                 Toast.makeText(getApplicationContext(), "Made comment", Toast.LENGTH_LONG).show();
-                getCommentList(); //refresh after sending
+                getAnnounceList(); //refresh after sending
             }
 
             @Override
@@ -71,7 +74,7 @@ public class UserCommentActivity extends AppCompatActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comment);
+        setContentView(R.layout.activity_announce);
 
         Bundle args = getIntent().getExtras();
         oAlarm = (AlarmElement) args.getSerializable("alarm");
@@ -83,19 +86,22 @@ public class UserCommentActivity extends AppCompatActivity {
         button = findViewById(R.id.button_announce);
 
         preferences = getSharedPreferences("register", MODE_PRIVATE); // can be edited by this app exclusively
+        Boolean is_offical = preferences.getBoolean("is_official", false);
+        if(!is_offical){
+            View v = findViewById(R.id.announce_dock);
+            v.setVisibility(View.GONE);
+        }
 
         retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create()).baseUrl(Constants.server_ip + Constants.server_port).build();
         apiService = retrofit.create(CS4CSApi.class);
-
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String contents = editText.getText().toString();
                 editText.setText(""); // clear comment edit text
-                String author = preferences.getString("user_email", "UNVERIFIED");
-                makeComment(new Comment(author, contents));
+                makeAnnounce(new Announce(contents));
             }
         });
     }
@@ -103,14 +109,14 @@ public class UserCommentActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        getCommentList();
+        getAnnounceList();
     }
 
-    private void getCommentList(){
+    private void getAnnounceList(){
         recycler = findViewById(R.id.recycler);
-        commentList = new ArrayList<>();
-        adapter = new CommentRecyclerAdapter(UserCommentActivity.this, commentList, oAlarm.get_id());
-        LinearLayoutManager layoutManager = new LinearLayoutManager(UserCommentActivity.this);
+        announceList = new ArrayList<>();
+        adapter = new AnnounceRecyclerAdapter(AnnounceActivity.this, announceList, oAlarm.get_id());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(AnnounceActivity.this);
         recycler.setLayoutManager(layoutManager);
         recycler.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -120,13 +126,13 @@ public class UserCommentActivity extends AppCompatActivity {
             retrofit = new Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create()).baseUrl(Constants.server_ip + Constants.server_port).build();
             apiService = retrofit.create(CS4CSApi.class);
-            Call<List<CommentElement>> call = apiService.getCommentList(oAlarm.get_id());
-            call.enqueue(new Callback<List<CommentElement>>() {
+            Call<List<AnnounceElement>> call = apiService.getAnnounceList(oAlarm.get_id());
+            call.enqueue(new Callback<List<AnnounceElement>>() {
                 @Override
-                public void onResponse(Call<List<CommentElement>> call, Response<List<CommentElement>> response) {
-                    commentList = response.body();
-                    Collections.sort(commentList, new sortByCreatedAt());
-                    recycler.setAdapter(new CommentRecyclerAdapter(getApplicationContext(), commentList, oAlarm.get_id()));
+                public void onResponse(Call<List<AnnounceElement>> call, Response<List<AnnounceElement>> response) {
+                    announceList = response.body();
+                    Collections.sort(announceList, new sortByCreatedAt());
+                    recycler.setAdapter(new AnnounceRecyclerAdapter(getApplicationContext(), announceList, oAlarm.get_id()));
                     recycler.smoothScrollToPosition(0);
                     /*
                     if (swipeContainer.isRefreshing()){
@@ -136,9 +142,9 @@ public class UserCommentActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<List<CommentElement>> call, Throwable t) {
+                public void onFailure(Call<List<AnnounceElement>> call, Throwable t) {
                     Log.d("AllAlarms","failed to get alarm list");
-                    Toast.makeText(UserCommentActivity.this, "Error Fetching Data!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AnnounceActivity.this, "Error Fetching Data!", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -148,9 +154,9 @@ public class UserCommentActivity extends AppCompatActivity {
 
     }
 
-    class sortByCreatedAt implements Comparator<CommentElement> {
+    class sortByCreatedAt implements Comparator<AnnounceElement> {
         @Override
-        public int compare(CommentElement a, CommentElement b) {
+        public int compare(AnnounceElement a, AnnounceElement b) {
             Date a_date, b_date;
 
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.KOREA);

@@ -1,6 +1,8 @@
 package com.example.cs408_app.API;
 import com.example.cs408_app.Model.Alarm;
 import com.example.cs408_app.Model.AlarmElement;
+import com.example.cs408_app.Model.Announce;
+import com.example.cs408_app.Model.AnnounceElement;
 import com.example.cs408_app.Model.Comment;
 import com.example.cs408_app.Model.CommentElement;
 import com.example.cs408_app.Model.Response;
@@ -68,5 +70,11 @@ public interface CS4CSApi {
     @GET("/comment/get_list_reply/{alarm_id}/{comment_id}")
     Call<List<CommentElement>> getReplyList(@Path("alarm_id") String alarm_id, @Path("comment_id") String comment_id);
 
+    /* Announce API */
+    @POST("/announce/make/{alarm_id}")
+    Call<Response> makeAnnounce(@Body Announce announce, @Path("alarm_id") String alarm_id);
+
+    @GET("/announce/get_list/{alarm_id}")
+    Call<List<AnnounceElement>> getAnnounceList(@Path("alarm_id") String alarm_id);
 
 }
