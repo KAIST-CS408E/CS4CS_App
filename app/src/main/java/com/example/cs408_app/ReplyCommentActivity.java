@@ -2,11 +2,9 @@ package com.example.cs408_app;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cs408_app.API.CS4CSApi;
-import com.example.cs408_app.Adapter.CommentRecyclerAdapter;
 import com.example.cs408_app.Adapter.ReplyRecyclerAdapter;
 import com.example.cs408_app.Config.Constants;
 import com.example.cs408_app.Model.Comment;
@@ -93,8 +90,8 @@ public class ReplyCommentActivity extends AppCompatActivity {
         textView = parentLayout.findViewById(R.id.text_replies);
         textView.setVisibility(View.GONE);
 
-        editText = findViewById(R.id.text_reply);
-        button = findViewById(R.id.button_reply);
+        editText = findViewById(R.id.text_announce);
+        button = findViewById(R.id.button_announce);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

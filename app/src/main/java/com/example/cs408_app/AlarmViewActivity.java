@@ -120,6 +120,19 @@ public class AlarmViewActivity extends AppCompatActivity implements OnMapReadyCa
                 startActivity(intent);
             }
         });
+
+        //announce activity
+        button = findViewById(R.id.button_announce);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AnnounceActivity.class);
+                Bundle args = new Bundle();
+                args.putSerializable("alarm", oAlarm);
+                intent.putExtras(args);
+                startActivity(intent);
+            }
+        });
     }
 
     private void displayReporterProfile(String alarm_id){
