@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cs408_app.API.CS4CSApi;
@@ -18,8 +19,12 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,6 +42,7 @@ public class AlarmViewActivity extends AppCompatActivity implements OnMapReadyCa
     TextView textView;
     Button callBtn;
     Button button;
+    ImageView imageView;
 
     private  void initMap(){
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -50,7 +56,10 @@ public class AlarmViewActivity extends AppCompatActivity implements OnMapReadyCa
         Double lng = oAlarm.getLng();
 
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat,lng), 17F));
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)));
+        Marker mMarker = googleMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)));
+        googleMap.addCircle(new CircleOptions()
+                .center(mMarker.getPosition()).radius(oAlarm.getRad())
+                .fillColor(0x80F46542).strokeWidth(0F));
     }
 
     @Override
@@ -75,6 +84,18 @@ public class AlarmViewActivity extends AppCompatActivity implements OnMapReadyCa
 
         textView = findViewById(R.id.text_cat);
         textView.setText(oAlarm.getCat_str());
+
+        imageView = findViewById(R.id.pictogram);
+        if (oAlarm.getCat_str().equals("Fire"))
+            imageView.setImageResource(R.drawable.picflam);
+        else if (oAlarm.getCat_str().equals("Explosion"))
+            imageView.setImageResource(R.drawable.picexplo);
+        else if (oAlarm.getCat_str().equals("Chemical"))
+            imageView.setImageResource(R.drawable.picskull);
+        else if (oAlarm.getCat_str().equals("Bio"))
+            imageView.setImageResource(R.drawable.picsilho);
+        else if (oAlarm.getCat_str().equals("Corrosion"))
+            imageView.setImageResource(R.drawable.picacid);
 
         Boolean is_official = preferences.getBoolean("is_official", false);
         View v = (View)findViewById(R.id.include_reporter_info);
