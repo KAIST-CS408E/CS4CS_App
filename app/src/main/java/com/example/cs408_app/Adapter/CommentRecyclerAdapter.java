@@ -45,12 +45,24 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecycler
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView name, contents;
+        public TextView name, contents, replies;
         public ViewHolder(View itemView){
             super(itemView);
             name = itemView.findViewById(R.id.text_name);
             contents = itemView.findViewById(R.id.text_contents);
+            replies = itemView.findViewById(R.id.text_replies);
+            replies.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        CommentElement selected = item.get(position);
+                        // do something
 
+                    }
+                }
+            });
+            /*
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -61,6 +73,7 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecycler
                     }
                 }
             });
+            */
         }
 
 
