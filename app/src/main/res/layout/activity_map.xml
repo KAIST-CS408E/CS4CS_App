@@ -45,34 +45,52 @@
                 android:layout_height="match_parent" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="280dp"
+                android:layout_alignParentBottom="true"
                 android:id="@+id/buttons">
 
                 <Button
                     android:id="@+id/ok"
                     android:visibility="invisible"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="OK" />
+                    android:text="OK"
+                    android:background="@color/confirm"
+                    android:textColor="@color/colorWhiteButton"
+                    android:layout_margin="5dp"
+                    android:textStyle="bold"
+                    android:textSize="20sp"/>
 
                 <Button
                     android:id="@+id/send"
                     android:visibility="gone"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="SEND" />
+                    android:text="SEND"
+                    android:background="@color/confirm"
+                    android:textColor="@color/colorWhiteButton"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:layout_margin="5dp"
+                    />
 
                 <Button
                     android:id="@+id/cancel"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
                     android:text="CANCEL"
-                    android:visibility="invisible" />
+                    android:background="@color/cancel"
+                    android:visibility="invisible"
+                    android:textColor="@color/colorWhiteButton"
+                    android:textStyle="bold"
+                    android:textSize="20sp"/>
 
             </LinearLayout>
 
@@ -84,7 +102,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp" />
+                android:layout_marginTop="30dp"
+                android:progressDrawable="@drawable/seek_bar"
+                android:thumb="@drawable/seek_thumb"/>
+
 
             <TextView
                 android:id="@+id/start"
@@ -93,7 +114,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/seekBar"
                 android:layout_alignParentLeft="true"
-                android:text="0m" />
+                android:text="0m"
+                android:textStyle="bold"
+                android:typeface="sans"
+                android:textSize="15dp"
+                />
 
             <TextView
                 android:id="@+id/end"
@@ -102,7 +127,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/seekBar"
                 android:layout_alignParentRight="true"
-                android:text="100m" />
+                android:text="100m"
+                android:typeface="sans"
+                android:textStyle="bold"
+                android:textSize="15dp"/>
 
 
         </RelativeLayout>

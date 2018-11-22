@@ -252,6 +252,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
         mMap.getUiSettings().setAllGesturesEnabled(false);
+        mMap.getUiSettings().setZoomGesturesEnabled(true);
         block_map_click = true;
 
         findViewById(R.id.ok).setVisibility(View.VISIBLE);
