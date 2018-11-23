@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/colorBackGrndWhite"
     tools:context="com.example.cs408_app.MainActivity">
 
     <LinearLayout
@@ -25,26 +26,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_weight="1"
-                android:background="?attr/colorPrimaryDark"
+                android:background="@drawable/header_gradient"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="@string/app_name">
+                app:title="Current Alerts">
 
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.AppBarLayout>
-
-        <TextView
-            android:id="@+id/text_preview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="quick preview" />
-
-        <Button
-            android:id="@+id/refresh_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="REFRESH" />
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout"

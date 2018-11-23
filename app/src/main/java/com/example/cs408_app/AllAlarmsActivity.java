@@ -52,16 +52,6 @@ public class AllAlarmsActivity extends AppCompatActivity {
         getAlarmList();
 
         recycler = findViewById(R.id.recycler);
-
-        // Explicit Refreshing
-        Button refresh_btn = findViewById(R.id.refresh_button);
-        refresh_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getAlarmList();
-                Toast.makeText(AllAlarmsActivity.this, "Alarm List Refreshed", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void getAlarmList(){
