@@ -148,6 +148,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         //Log.e("TAG",Integer.toString(progress));
         circle.setRadius(progress);
+        Log.e(TAG, Integer.toString(progress));
     }
 
     @Override

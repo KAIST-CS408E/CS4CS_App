@@ -97,7 +97,6 @@
             <SeekBar
                 android:id="@+id/seekBar"
                 android:visibility="invisible"
-                android:progress="50"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -127,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/seekBar"
                 android:layout_alignParentRight="true"
-                android:text="100m"
+                android:text="200m"
                 android:typeface="sans"
                 android:textStyle="bold"
                 android:textSize="15dp"/>

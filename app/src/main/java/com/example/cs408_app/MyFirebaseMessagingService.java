@@ -13,11 +13,13 @@ import android.location.Location;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.example.cs408_app.Model.AlarmElement;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -63,8 +65,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         if (currentLocation != null){
                             float distance = currentLocation.distanceTo(acciLocation);
 
-                            Log.e("CompareLocation", data.get("title") + " " + Float.toString(distance));
-                            if (distance < 100)
+                            Log.e("CompareLocation", data.get("title") + ":" + Float.toString(distance) +", "
+                            + data.get("rad"));
+                            if (distance < Double.parseDouble(data.get("rad")))
                                 sendNotification(data);
                         }
                         else
@@ -113,17 +116,28 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
     }
 
+    private Intent buildIntent(Map<String, String> data){
+
+        AlarmElement received = new AlarmElement(data.get("id"), Double.parseDouble(data.get("lat")),
+                Double.parseDouble(data.get("lng")), Double.parseDouble(data.get("rad")), data.get("title"), data.get("cat_str"), data.get("desc"),
+                data.get("reporter_id"), data.get("created_at"));
+
+        Bundle args = new Bundle();
+        args.putSerializable("alarm", received);
+
+        Intent intent = new Intent(this, AlarmViewActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtras(args);
+        return intent;
+    }
+
     private void sendNotification(Map<String, String> data){
 
         final int NOTIFICATION_ID = 1;
         final String NOTIFICATION_CHANNEL_ID = "my_notification_channel";
 
-
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        Intent registerIntent = new Intent(this, MainActivity.class);
-        registerIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        Intent registerIntent = buildIntent(data);
+        registerIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent registerPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, registerIntent,
                 PendingIntent.FLAG_CANCEL_CURRENT);
 
@@ -157,7 +171,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setVibrate(new long[] {500, 3000, 500, 3000})
                 // Icon size
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), android.R.drawable.ic_dialog_alert)) // acquire an external resource by using URI(Uniform Resource Identifier)
-                .setSmallIcon(R.mipmap.ic_launcher) // using mipmap, produce smaller icon
+                .setSmallIcon(R.mipmap.ic_launcher)// using mipmap, produce smaller icon
                 // Contents
                 .setContentTitle(data.get("title"))
                 .setContentText(data.get("body"))
@@ -168,8 +182,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentIntent(registerPendingIntent)
                 .setAutoCancel(true)
                 // If user click a button after expanding the notification
-                .addAction(new NotificationCompat.Action(R.drawable.common_google_signin_btn_text_dark, "Register", registerPendingIntent))
-                .addAction(new NotificationCompat.Action(R.drawable.common_google_signin_btn_text_dark, "Enter", registerPendingIntent));
+                .addAction(new NotificationCompat.Action(R.drawable.common_google_signin_btn_text_dark, "Show accident", registerPendingIntent))
+                .addAction(new NotificationCompat.Action(R.drawable.common_google_signin_btn_text_dark, "Ignore", registerPendingIntent));
 
         assert notificationManager != null;
         notificationManager.notify(NOTIFICATION_ID /* ID of notification */, notificationBuilder.build());
