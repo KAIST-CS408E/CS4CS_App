@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_gradient"
+    android:background="@color/colorBackGrndWhite"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
@@ -28,91 +28,108 @@
 
         </android.support.v7.widget.Toolbar>
 
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/text_user"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintVertical_chainStyle="spread_inside" />
+
         <TextView
             android:id="@+id/text_user"
-            android:layout_width="0dp"
+            android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="CURRENT USER UNKNOWN"
             android:textAlignment="center"
             android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/official_switch"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/map" />
 
         <Switch
             android:id="@+id/official_switch"
-            android:layout_width="0dp"
+            android:layout_width="145dp"
             android:layout_height="30dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:text="I am an offical"
+            app:layout_constraintBottom_toTopOf="@+id/button_map"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_user" />
 
         <Button
             android:id="@+id/button_map"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_width="290dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/button_red"
             android:text="Go to map"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintBottom_toTopOf="@+id/button_all_alarms"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/official_switch" />
 
         <Button
             android:id="@+id/button_all_alarms"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_width="290dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/button_blue"
             android:text="VIEW ALL ALARMS"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintBottom_toTopOf="@+id/alarm"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_map" />
 
         <Button
-            android:id="@+id/button_register"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Sign Up"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_all_alarms" />
-
-        <Button
             android:id="@+id/not_alarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:text="DeclineAlarm"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/alarm"
-            app:layout_constraintTop_toBottomOf="@+id/button_register" />
+            app:layout_constraintTop_toBottomOf="@+id/button_all_alarms" />
 
         <Button
             android:id="@+id/alarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:text="ReceiveAlarm"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/not_alarm"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_register" />
+            app:layout_constraintTop_toBottomOf="@+id/button_all_alarms" />
     </android.support.constraint.ConstraintLayout>
 
-    <android.support.design.widget.NavigationView
+  <!--  <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_m"
-        app:menu="@menu/activity_main_drawer" />
+        app:menu="@menu/activity_main_drawer" />-->
 
 </android.support.v4.widget.DrawerLayout>
 
