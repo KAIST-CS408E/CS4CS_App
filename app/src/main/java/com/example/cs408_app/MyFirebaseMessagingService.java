@@ -67,11 +67,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
                             Log.e("CompareLocation", data.get("title") + ":" + Float.toString(distance) +", "
                             + data.get("rad"));
-                            //data.get("first").equals("false")
 
                             if (distance < Double.parseDouble(data.get("rad")))
                                 sendNotification(data, true);
-                            else
+                            else if (data.get("first").equals("true"))
                                 sendNotification(data, false);
                         }
                         else
@@ -169,11 +168,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 // Show notification even on lock screen
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
-                // use custom mp3 sound file (./res/raw/siren.mp3)
-                .setSound(Uri.parse("android.resource://"
-                        + getApplicationContext().getPackageName() + "/" + R.raw.siren))
                 // off-vibrate time(ms), on-vibrate time, off time, on time, off, on, ...
-                .setVibrate(new long[] {500, 3000, 500, 3000})
+                .setVibrate(new long[] {0, 1500, 500, 1500, 500})
                 // Icon size
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), android.R.drawable.ic_dialog_alert)) // acquire an external resource by using URI(Uniform Resource Identifier)
                 .setSmallIcon(R.mipmap.ic_launcher)// using mipmap, produce smaller icon
@@ -189,6 +185,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 // If user click a button after expanding the notification
                 .addAction(new NotificationCompat.Action(R.drawable.common_google_signin_btn_text_dark, "Show accident", registerPendingIntent))
                 .addAction(new NotificationCompat.Action(R.drawable.common_google_signin_btn_text_dark, "Ignore", registerPendingIntent));
+
+        if (near)
+        // use custom mp3 sound file (./res/raw/siren.mp3)
+                notificationBuilder.setSound(Uri.parse("android.resource://"
+                + getApplicationContext().getPackageName() + "/" + R.raw.siren));
 
         assert notificationManager != null;
         notificationManager.notify(NOTIFICATION_ID /* ID of notification */, notificationBuilder.build());
