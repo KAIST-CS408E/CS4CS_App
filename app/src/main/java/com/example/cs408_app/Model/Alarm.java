@@ -7,8 +7,9 @@ package com.example.cs408_app.Model;
 public class Alarm{
     double lat, lng, rad;
     String title, cat_str, desc, reporter;
+    int floor, room_number;
 
-    public  Alarm(double lat, double lng, double radius, String title, String cat_str, String desc, String reporter){
+    public  Alarm(double lat, double lng, double radius, String title, String cat_str, String desc, String reporter, int floor, int room_number){
         this.lat = lat;
         this.lng = lng;
         this.rad = radius;
@@ -16,5 +17,7 @@ public class Alarm{
         this.cat_str = cat_str;
         this.desc = desc;
         this.reporter = reporter;
+        this.floor = floor;
+        this.room_number = room_number;
     }
 }

@@ -160,6 +160,7 @@ public class SendReportActivity extends AppCompatActivity {
                         String title = titleText.getText().toString();
                         String desc = descText.getText().toString();
                         int cat_id = -1;
+                        EditText room_number, floor;
 
                         // Sanity Check: whether it is blank or not
                         if (TextUtils.isEmpty(title)) {
@@ -188,7 +189,11 @@ public class SendReportActivity extends AppCompatActivity {
                             String cat_str = r.getText().toString();
                             // send alert
                             String reporter = preferences.getString("user_email", "UNVERIFIED");
-                            Alarm alarm = new Alarm(geo_lat, geo_lng, geo_rad, title, cat_str, desc, reporter);
+
+                            floor = findViewById(R.id.floor_input);
+                            room_number = findViewById(R.id.room_number_input);
+                            Alarm alarm = new Alarm(geo_lat, geo_lng, geo_rad, title, cat_str, desc, reporter,
+                            Integer.parseInt(floor.getText().toString()), Integer.parseInt(room_number.getText().toString()));
                             postData(alarm);
 
                             dialogInterface.dismiss();
