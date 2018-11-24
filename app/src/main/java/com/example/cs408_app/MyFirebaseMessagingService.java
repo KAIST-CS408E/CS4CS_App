@@ -34,6 +34,7 @@ import java.util.Map;
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private String TAG = "FirebaseService";
+    private int NOTIFICATION_ID = 1;
 
     /**
      * Called if InstanceID token is updated. This may occur if the security of
@@ -129,49 +130,32 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         return intent;
     }
 
-    private void sendNotification(Map<String, String> data, boolean near){
+    private NotificationChannel makeChannel(String channel_id, Uri soundUri){
 
-        final int NOTIFICATION_ID = 1;
-        final String NOTIFICATION_CHANNEL_ID = "my_notification_channel";
-        String cat_str;
-
-        Intent registerIntent = buildIntent(data);
-        registerIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent registerPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, registerIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT);
-
-        /**
-         * Notification Channel
-         */
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "My Notifications", NotificationManager.IMPORTANCE_HIGH);
+            NotificationChannel notificationChannel = new NotificationChannel(channel_id, "My Notifications", NotificationManager.IMPORTANCE_HIGH);
 
             // Configure the notification channel.
             notificationChannel.setDescription("Channel description");
             notificationChannel.enableLights(true);
             notificationChannel.setLightColor(Color.RED);
             notificationChannel.enableVibration(true);
-            notificationChannel.setVibrationPattern(new long[] {0, 1500, 500, 1500, 500});
+            notificationChannel.setVibrationPattern(new long[]{0, 1500, 500, 1500, 500});
             notificationChannel.setShowBadge(true);
 
-            if (near) {
-                // use custom mp3 sound file (./res/raw/siren.mp3)
-                notificationChannel.setSound(Uri.parse("android.resource://"
-                        + getApplicationContext().getPackageName() + "/" + R.raw.siren), null);
-            } else {
-                notificationChannel.setSound(null, null);
-            }
-
-            assert notificationManager != null;
-            notificationManager.createNotificationChannel(notificationChannel);
+            notificationChannel.setSound(soundUri, null);
+            return notificationChannel;
         }
 
-        /**
-         * Notification Compat
-         */
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+        return null;
+    }
+
+    private NotificationCompat.Builder buildNotification(String channel_id, Map<String, String> data,
+                                                         PendingIntent registerPendingIntent, boolean near){
+
+        String cat_str;
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channel_id)
                 // Show notification even on lock screen
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
                 // off-vibrate time(ms), on-vibrate time, off time, on time, off, on, ...
@@ -192,11 +176,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .addAction(new NotificationCompat.Action(R.drawable.common_google_signin_btn_text_dark, "Ignore", registerPendingIntent));
 
         if (near)
-        // use custom mp3 sound file (./res/raw/siren.mp3)
-                notificationBuilder.setSound(Uri.parse("android.resource://"
-                + getApplicationContext().getPackageName() + "/" + R.raw.siren));
+            // use custom mp3 sound file (./res/raw/siren.mp3)
+            notificationBuilder.setSound(Uri.parse("android.resource://"
+                    + getApplicationContext().getPackageName() + "/" + R.raw.siren));
 
         cat_str = data.get("cat_str");
+
         if (cat_str.equals("Fire"))
             notificationBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.picflam)); // acquire an external resource by using URI(Uniform Resource Identifier)
         else if(cat_str.equals("Explosion"))
@@ -210,7 +195,51 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         else
             notificationBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), android.R.drawable.ic_dialog_alert));
 
+        return notificationBuilder;
+    }
+
+    private void sendNotification(Map<String, String> data, boolean near){
+
+        String NOTIFICATION_SOUND = "notifcation with siren";
+        String NOTIFICATION_SILENT = "notification without siren";
+
+        Intent registerIntent = buildIntent(data);
+        registerIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent registerPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, registerIntent,
+                PendingIntent.FLAG_CANCEL_CURRENT);
+
+        /**
+         * Notification Channel
+         */
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            NotificationChannel soundChannel = makeChannel(NOTIFICATION_SOUND, Uri.parse("android.resource://"
+                    + getApplicationContext().getPackageName() + "/" + R.raw.siren));
+
+            NotificationChannel silentChannel =  makeChannel(NOTIFICATION_SILENT, null);
+
+            assert notificationManager != null;
+            notificationManager.createNotificationChannel(soundChannel);
+            notificationManager.createNotificationChannel(silentChannel);
+        }
+
+        /**
+         * Notification Compat
+         */
+        NotificationCompat.Builder soundBuilder = buildNotification(NOTIFICATION_SOUND, data,
+                    registerPendingIntent, near);
+
+        NotificationCompat.Builder silentBuilder = buildNotification(NOTIFICATION_SILENT, data,
+                registerPendingIntent, near);
+
         assert notificationManager != null;
-        notificationManager.notify(NOTIFICATION_ID /* ID of notification */, notificationBuilder.build());
+
+        if (near)
+            notificationManager.notify(NOTIFICATION_ID /* ID of notification */, soundBuilder.build());
+        else
+            notificationManager.notify(NOTIFICATION_ID, silentBuilder.build());
+
+        NOTIFICATION_ID++;
     }
 }
