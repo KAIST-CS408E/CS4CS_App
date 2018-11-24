@@ -67,8 +67,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
                             Log.e("CompareLocation", data.get("title") + ":" + Float.toString(distance) +", "
                             + data.get("rad"));
+                            //data.get("first").equals("false")
+
                             if (distance < Double.parseDouble(data.get("rad")))
-                                sendNotification(data);
+                                sendNotification(data, true);
+                            else
+                                sendNotification(data, false);
                         }
                         else
                             Log.e(TAG, "Phone should turn on the location tracking");
@@ -98,16 +102,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Double lng = Double.parseDouble(data.get("lng"));
             //Double alt = Double.parseDouble(data.get("alt"));
 
-            if (data.get("first").equals("false")){
-                acciLocation = new Location("acciLocation");
+            acciLocation = new Location("acciLocation");
 
-                acciLocation.setLatitude(lat);
-                acciLocation.setLongitude(lng);
-                //acciLocation.setAltitude(alt);
-                CompareLocation(data, acciLocation);
-            }
-            else
-                sendNotification(data);
+            acciLocation.setLatitude(lat);
+            acciLocation.setLongitude(lng);
+            CompareLocation(data, acciLocation);
         }
 
         // Check if message contains a notification payload.
@@ -131,7 +130,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         return intent;
     }
 
-    private void sendNotification(Map<String, String> data){
+    private void sendNotification(Map<String, String> data, boolean near){
 
         final int NOTIFICATION_ID = 1;
         final String NOTIFICATION_CHANNEL_ID = "my_notification_channel";

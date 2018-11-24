@@ -47,92 +47,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     private GoogleMap mMap;
     private Marker mMarker;
-    private Boolean mLocationPermissionGranted = false;
-    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
-    private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private static final float DEFAULT_ZOOM = 17F;
     private static final String TAG = "MapActivity";
     private boolean block_map_click = false;
     private Circle circle;
-
-    private void getLocationPermission(){
-
-        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION};
-
-        if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                        COURSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-
-            mLocationPermissionGranted = false;
-            ActivityCompat.requestPermissions(this,
-                    permissions,
-                    LOCATION_PERMISSION_REQUEST_CODE);
-        }else{
-            initMap();
-            mLocationPermissionGranted = true;
-        }
-
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
-        switch (requestCode){
-            case LOCATION_PERMISSION_REQUEST_CODE:{
-                if(grantResults.length > 0){
-                    for(int i = 0; i< grantResults.length; i++){
-                        if(grantResults[i] != PackageManager.PERMISSION_GRANTED)
-                            return;
-                    }
-                    mLocationPermissionGranted = true;
-                    initMap();
-                }
-            }
-        }
-    }
+    Double myLat, myLng;
 
     private  void initMap(){
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-    }
-
-    private void getDeviceLocation(){
-
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
-        try{
-
-            final Task location = mFusedLocationProviderClient.getLastLocation();
-            location.addOnCompleteListener(new OnCompleteListener() {
-                @Override
-                public void onComplete(@NonNull Task task) {
-
-                    if(task.isSuccessful()){
-
-                        Location currentLocation = (Location) task.getResult();
-                        Double lat = 36.372, lng = 127.363;
-
-                        if (currentLocation != null) {
-                            lat = currentLocation.getLatitude();
-                            lng = currentLocation.getLongitude();
-                        }
-
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat,lng), DEFAULT_ZOOM));
-                    }
-                    else{
-                        LatLng sydney = new LatLng(-34, 151);
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-                    }
-                }
-            });
-        }catch (SecurityException e){
-            Log.e(TAG, e.getMessage());
-        }
     }
 
     @Override
@@ -163,6 +88,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         SeekBar seekBar = findViewById(R.id.seekBar);
         seekBar.setMax(200);
         seekBar.setOnSeekBarChangeListener(this);
+
+        Intent from_main = getIntent();
+        myLat = from_main.getDoubleExtra("Latitude", 36.372);
+        myLng = from_main.getDoubleExtra("Longitude", 127.363);
 
         send_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,18 +150,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             }
         });
 
-        getLocationPermission();
+        initMap();
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        if (mLocationPermissionGranted) {
-            getDeviceLocation();
-            //mMap.setMyLocationEnabled(true);
-        }
-
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLat,myLng), DEFAULT_ZOOM));
         mMap.setOnMapClickListener(this);
     }
 

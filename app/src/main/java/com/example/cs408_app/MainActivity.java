@@ -64,9 +64,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     private String TAG = "MainActiviy";
-    private String[] mPlanetTitles;
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
 
     // Google Map
     private Boolean mLocationPermissionGranted = false;
@@ -76,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private static final float DEFAULT_ZOOM = 17F;
     private GoogleMap mMap;
+    Double Lat, Lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +135,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, MapActivity.class);
+                intent.putExtra("Latitude", Lat);
+                intent.putExtra("Longitude", Lng);
                 startActivity(intent);
             }
         });
@@ -207,6 +207,23 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        switch (requestCode){
+            case LOCATION_PERMISSION_REQUEST_CODE:{
+                if(grantResults.length > 0){
+                    for(int i = 0; i< grantResults.length; i++){
+                        if(grantResults[i] != PackageManager.PERMISSION_GRANTED)
+                            return;
+                    }
+                    mLocationPermissionGranted = true;
+                    initMap();
+                }
+            }
+        }
+    }
+
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -251,14 +268,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     if(task.isSuccessful()){
 
                         Location currentLocation = (Location) task.getResult();
-                        Double lat = 36.372, lng = 127.363;
+                        Lat = 36.372;
+                        Lng = 127.363;
 
                         if (currentLocation != null) {
-                            lat = currentLocation.getLatitude();
-                            lng = currentLocation.getLongitude();
+                            Lat = currentLocation.getLatitude();
+                            Lng = currentLocation.getLongitude();
                         }
 
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat,lng), DEFAULT_ZOOM));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Lat,Lng), DEFAULT_ZOOM));
                     }
                     else{
                         LatLng sydney = new LatLng(-34, 151);
