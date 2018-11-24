@@ -133,6 +133,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         final int NOTIFICATION_ID = 1;
         final String NOTIFICATION_CHANNEL_ID = "my_notification_channel";
+        String cat_str;
 
         Intent registerIntent = buildIntent(data);
         registerIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -171,11 +172,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 // off-vibrate time(ms), on-vibrate time, off time, on time, off, on, ...
                 .setVibrate(new long[] {0, 1500, 500, 1500, 500})
                 // Icon size
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), android.R.drawable.ic_dialog_alert)) // acquire an external resource by using URI(Uniform Resource Identifier)
                 .setSmallIcon(R.mipmap.ic_launcher)// using mipmap, produce smaller icon
                 // Contents
                 .setContentTitle(data.get("title"))
-                .setContentText(data.get("body"))
+                .setContentText(data.get("desc"))
                 // When a user expands(slide down) original sized notification(above contents), show more info
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(data.get("body")))
@@ -190,6 +190,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // use custom mp3 sound file (./res/raw/siren.mp3)
                 notificationBuilder.setSound(Uri.parse("android.resource://"
                 + getApplicationContext().getPackageName() + "/" + R.raw.siren));
+
+        cat_str = data.get("cat_str");
+        if (cat_str.equals("Fire"))
+            notificationBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.picflam)); // acquire an external resource by using URI(Uniform Resource Identifier)
+        else if(cat_str.equals("Explosion"))
+            notificationBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.picexplo));
+        else if(cat_str.equals("Chemical"))
+            notificationBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.picskull));
+        else if(cat_str.equals("Bio"))
+            notificationBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.picsilho));
+        else if(cat_str.equals("Corrosion"))
+            notificationBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.picacid));
+        else
+            notificationBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), android.R.drawable.ic_dialog_alert));
 
         assert notificationManager != null;
         notificationManager.notify(NOTIFICATION_ID /* ID of notification */, notificationBuilder.build());
