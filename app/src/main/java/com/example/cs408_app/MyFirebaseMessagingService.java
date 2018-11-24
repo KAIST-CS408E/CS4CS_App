@@ -145,14 +145,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
          */
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
             NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "My Notifications", NotificationManager.IMPORTANCE_HIGH);
 
             // Configure the notification channel.
             notificationChannel.setDescription("Channel description");
             notificationChannel.enableLights(true);
             notificationChannel.setLightColor(Color.RED);
-            notificationChannel.setVibrationPattern(new long[]{500, 5000, 500, 5000, 500, 5000});
             notificationChannel.enableVibration(true);
+            notificationChannel.setVibrationPattern(new long[] {500, 3000, 500, 3000});
+            notificationChannel.setSound(Uri.parse("android.resource://"
+                    + getApplicationContext().getPackageName() + "/" + R.raw.siren), null);
+            notificationChannel.setShowBadge(true);
             assert notificationManager != null;
             notificationManager.createNotificationChannel(notificationChannel);
         }
