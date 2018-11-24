@@ -146,8 +146,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
             NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "My Notifications", NotificationManager.IMPORTANCE_HIGH);
 
             // Configure the notification channel.
@@ -157,14 +155,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationChannel.enableVibration(true);
             notificationChannel.setVibrationPattern(new long[] {0, 1500, 500, 1500, 500});
             notificationChannel.setShowBadge(true);
-            assert notificationManager != null;
-            notificationManager.createNotificationChannel(notificationChannel);
 
-            if (near)
+            if (near) {
                 // use custom mp3 sound file (./res/raw/siren.mp3)
                 notificationChannel.setSound(Uri.parse("android.resource://"
                         + getApplicationContext().getPackageName() + "/" + R.raw.siren), null);
+            } else {
+                notificationChannel.setSound(null, null);
+            }
 
+            assert notificationManager != null;
+            notificationManager.createNotificationChannel(notificationChannel);
         }
 
         /**
