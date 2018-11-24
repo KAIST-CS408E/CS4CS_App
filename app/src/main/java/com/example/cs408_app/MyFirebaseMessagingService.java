@@ -156,11 +156,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationChannel.setLightColor(Color.RED);
             notificationChannel.enableVibration(true);
             notificationChannel.setVibrationPattern(new long[] {0, 1500, 500, 1500, 500});
-            notificationChannel.setSound(Uri.parse("android.resource://"
-                    + getApplicationContext().getPackageName() + "/" + R.raw.siren), null);
             notificationChannel.setShowBadge(true);
             assert notificationManager != null;
             notificationManager.createNotificationChannel(notificationChannel);
+
+            if (near)
+                // use custom mp3 sound file (./res/raw/siren.mp3)
+                notificationChannel.setSound(Uri.parse("android.resource://"
+                        + getApplicationContext().getPackageName() + "/" + R.raw.siren), null);
+
         }
 
         /**
