@@ -29,7 +29,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_scrollFlags="scroll|enterAlways"
         app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:title="Alert Information"
+        app:title="Alert detail"
         app:titleTextColor="@color/colorWhiteButton">
 
     </android.support.v7.widget.Toolbar>
