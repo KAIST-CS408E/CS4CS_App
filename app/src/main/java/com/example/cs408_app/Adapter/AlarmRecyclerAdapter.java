@@ -14,6 +14,9 @@ import com.example.cs408_app.AlarmViewActivity;
 import com.example.cs408_app.Model.AlarmElement;
 import com.example.cs408_app.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -47,8 +50,23 @@ public class AlarmRecyclerAdapter extends RecyclerView.Adapter<AlarmRecyclerAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        final String OLD_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+        final String NEW_FORMAT = "MM월 dd일 HH:mm";
+
+        String oldDateString = item.get(position).getCreated_at();
+        String newDateString;
+        SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
+        Date d = null;
+        try {
+            d = sdf.parse(oldDateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        sdf.applyPattern(NEW_FORMAT);
+        newDateString = sdf.format(d);
+
         holder.title.setText(item.get(position).getTitle());
-        holder.desc.setText(item.get(position).getDesc());
+        holder.desc.setText(newDateString);
         if (pictograms.get(item.get(position).getCat_str()) != null)
             holder.pictogram.setImageResource(pictograms.get(item.get(position).getCat_str()));
     }
