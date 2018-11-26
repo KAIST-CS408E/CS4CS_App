@@ -126,9 +126,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="8dp"
                 android:scrollbars="vertical"
                 android:text="This is the description"
                 android:textColor="@color/common_google_signin_btn_text_light_pressed"
@@ -138,8 +138,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toBottomOf="@+id/textView14"
+                app:layout_constraintVertical_bias="1.0" />
 
             <include
                 android:id="@+id/include_reporter_info"
@@ -161,7 +161,7 @@
 
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/constraintLayout3"
-                    android:layout_width="124dp"
+                    android:layout_width="137dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
@@ -191,7 +191,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
-                        android:text="office notice"
+                        android:text="official notice"
                         android:textAlignment="center"
                         android:textAllCaps="true"
                         android:textColor="@color/colorSetHere"
@@ -204,7 +204,7 @@
 
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/constraintLayout4"
-                    android:layout_width="124dp"
+                    android:layout_width="137dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
@@ -256,6 +256,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:text="Additional Info"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider" />
 
         </android.support.constraint.ConstraintLayout>
 
