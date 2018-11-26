@@ -11,16 +11,18 @@
 
     <color name="colorFillBlank">#E25E64</color>
     <color name="colorTextHint">#ababab</color>
-    <color name="colorSetHere">#31579E</color>
+    <color name="colorSetHere">#5b8fff</color>
     <color name="colorBackground">#ED3132</color>
     <color name="colorStatusBar">#ED3132</color>
-    <color name="colorEdge">#566067</color>
+    <color name="colorEdge">#E0E0E0</color>
     <color name="colorUpVote">#FF9500</color>
     <color name="colorWhiteButton">#FFFFFF</color>
-    <color name="colorBackGrndWhite">#F0EFF4</color>
+    <color name="colorBackGrndWhite">#FFFFFF</color>
     <color name="colorTranspaRed">#EF4546</color>
 
     <color name="seek_bar_background">#ababab</color>
     <color name="seek_bar_progress">#FF4081</color>
     <color name="seek_bar_secondary_progress">#3399CC</color>
+
+    <color name="googleBlue">#4184F7</color>
 </resources>

@@ -24,6 +24,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 import retrofit2.Call;
@@ -79,11 +82,28 @@ public class AlarmViewActivity extends AppCompatActivity implements OnMapReadyCa
         textView = findViewById(R.id.text_desc);
         textView.setText(oAlarm.getDesc());
 
+        final String OLD_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+        final String NEW_FORMAT = "MM월 dd일 HH:mm";
+
+        // August 12, 2010
+        String oldDateString = oAlarm.getCreated_at();
+        String newDateString;
+
+        SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
+        Date d = null;
+        try {
+            d = sdf.parse(oldDateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        sdf.applyPattern(NEW_FORMAT);
+        newDateString = sdf.format(d);
+
         textView = findViewById(R.id.text_date);
-        textView.setText(oAlarm.getCreated_at());
+        textView.setText(newDateString);
 
         textView = findViewById(R.id.text_cat);
-        textView.setText(oAlarm.getCat_str());
+        textView.setText("Type: " + oAlarm.getCat_str());
 
         imageView = findViewById(R.id.pictogram);
         if (oAlarm.getCat_str().equals("Fire"))
