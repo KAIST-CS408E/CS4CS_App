@@ -7,7 +7,7 @@
         <item name="colorPrimaryDark">@color/colorBackground</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorHint">@color/colorTextHint</item>
-        <item name="android:textColor">@color/colorEdge</item>
+        <item name="android:textColor">@color/common_google_signin_btn_text_light_pressed</item>
         <item name="colorError">@color/colorFillBlank</item>
     </style>
 

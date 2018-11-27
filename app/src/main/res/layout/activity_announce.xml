@@ -6,6 +6,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:background="@color/colorSetHere"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Random Event"
+            android:textColor="@color/colorWhiteButton"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
     <TextView
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
@@ -13,24 +38,24 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Announcement Board"
+        android:text="Official Notice"
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_name" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
-    <TextView
-        android:id="@+id/text_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Random Event"
-        android:textSize="24sp"
+    <View
+        android:id="@+id/divider8"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorEdge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
@@ -39,47 +64,78 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toTopOf="@+id/announce_dock"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintTop_toBottomOf="@+id/divider8">
+
+    </android.support.v7.widget.RecyclerView>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/announce_dock"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <EditText
-            android:id="@+id/text_announce"
+        <View
+            android:id="@+id/divider9"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_height="1dp"
             android:layout_marginBottom="8dp"
-            android:ems="10"
-            android:hint="Enter announcement"
-            android:inputType="textPersonName"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button_announce"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:background="@color/colorEdge"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/button_announce"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="72dp"
+            android:layout_height="39dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="Announce"
+            android:background="@drawable/transparent_background"
+            android:text="Post"
+            android:textAllCaps="false"
+            android:textColor="@color/colorHeader"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout5"
+            android:layout_width="0dp"
+            android:layout_height="39dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/comment_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button_announce"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <EditText
+                android:id="@+id/text_announce"
+                android:layout_width="206dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/transparent_background"
+                android:elevation="10dp"
+                android:ems="10"
+                android:hint="Write a comment...."
+                android:inputType="textPersonName"
+                android:textAlignment="textStart"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/constraintLayout5"
+                app:layout_constraintEnd_toEndOf="@+id/constraintLayout5"
+                app:layout_constraintHorizontal_bias="0.12"
+                app:layout_constraintStart_toStartOf="@+id/constraintLayout5"
+                app:layout_constraintTop_toTopOf="@+id/constraintLayout5" />
+        </android.support.constraint.ConstraintLayout>
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

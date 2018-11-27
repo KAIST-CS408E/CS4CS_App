@@ -14,6 +14,9 @@ import com.example.cs408_app.Model.CommentElement;
 import com.example.cs408_app.R;
 import com.example.cs408_app.ReplyCommentActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class AnnounceRecyclerAdapter extends RecyclerView.Adapter<AnnounceRecyclerAdapter.ViewHolder>{
@@ -36,8 +39,25 @@ public class AnnounceRecyclerAdapter extends RecyclerView.Adapter<AnnounceRecycl
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
         AnnounceElement oAnnounce = item.get(position);
-        holder.date.setText(oAnnounce.getCreated_at());
+
+        final String OLD_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+        final String NEW_FORMAT = "MM월 dd일 HH:mm";
+
+        String oldDateString = oAnnounce.getCreated_at();
+        String newDateString;
+        SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
+        Date d = null;
+        try {
+            d = sdf.parse(oldDateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        sdf.applyPattern(NEW_FORMAT);
+        newDateString = sdf.format(d);
+
+        holder.date.setText(newDateString);
         holder.contents.setText(oAnnounce.getContents());
     }
 
