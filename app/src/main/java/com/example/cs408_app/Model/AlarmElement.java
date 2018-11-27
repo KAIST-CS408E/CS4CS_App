@@ -4,9 +4,10 @@ import java.io.Serializable;
 
 public class AlarmElement implements Serializable {
     private double lat, lng, rad;
-    private String _id, title, cat_str, desc, reporter_id, created_at;
+    private String _id, title, cat_str, desc, reporter_id, created_at, floor, room_number;
 
-    public AlarmElement(String _id, double lat, double lng, double rad, String title, String cat_str, String desc, String reporter_id, String created_at){
+    public AlarmElement(String _id, double lat, double lng, double rad, String title, String cat_str, String desc,
+                        String reporter_id, String created_at, String floor, String room_number){
         this._id = _id;
         this.lat = lat;
         this.lng = lng;
@@ -16,6 +17,8 @@ public class AlarmElement implements Serializable {
         this.desc = desc;
         this.reporter_id = reporter_id;
         this.created_at = created_at;
+        this.floor = floor;
+        this.room_number = room_number;
     }
 
     public String get_id() {
@@ -89,4 +92,8 @@ public class AlarmElement implements Serializable {
     public void setCreated_at(String created_at) {
         this.created_at = created_at;
     }
+
+    public String getFloor() {return floor;}
+
+    public String getRoom_number() {return room_number; }
 }

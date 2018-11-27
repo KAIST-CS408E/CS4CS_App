@@ -106,6 +106,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             acciLocation.setLatitude(lat);
             acciLocation.setLongitude(lng);
+
+            Log.e(TAG, Double.toString(lat));
             CompareLocation(data, acciLocation);
         }
 
@@ -119,7 +121,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         AlarmElement received = new AlarmElement(data.get("id"), Double.parseDouble(data.get("lat")),
                 Double.parseDouble(data.get("lng")), Double.parseDouble(data.get("rad")), data.get("title"), data.get("cat_str"), data.get("desc"),
-                data.get("reporter_id"), data.get("created_at"));
+                data.get("reporter_id"), data.get("created_at"), data.get("floor"), data.get("room_number"));
 
         Bundle args = new Bundle();
         args.putSerializable("alarm", received);

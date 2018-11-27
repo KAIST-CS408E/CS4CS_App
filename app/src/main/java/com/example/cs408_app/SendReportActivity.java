@@ -193,7 +193,7 @@ public class SendReportActivity extends AppCompatActivity {
                             floor = findViewById(R.id.floor_input);
                             room_number = findViewById(R.id.room_number_input);
                             Alarm alarm = new Alarm(geo_lat, geo_lng, geo_rad, title, cat_str, desc, reporter,
-                            Integer.parseInt(floor.getText().toString()), Integer.parseInt(room_number.getText().toString()));
+                                    floor.getText().toString(), room_number.getText().toString());
                             postData(alarm);
 
                             dialogInterface.dismiss();

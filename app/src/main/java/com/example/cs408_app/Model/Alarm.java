@@ -6,10 +6,9 @@ package com.example.cs408_app.Model;
 
 public class Alarm{
     double lat, lng, rad;
-    String title, cat_str, desc, reporter;
-    int floor, room_number;
+    String title, cat_str, desc, reporter, floor, room_number;
 
-    public  Alarm(double lat, double lng, double radius, String title, String cat_str, String desc, String reporter, int floor, int room_number){
+    public  Alarm(double lat, double lng, double radius, String title, String cat_str, String desc, String reporter, String floor, String room_number){
         this.lat = lat;
         this.lng = lng;
         this.rad = radius;
