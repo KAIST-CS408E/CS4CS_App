@@ -82,6 +82,9 @@ public class AlarmViewActivity extends AppCompatActivity implements OnMapReadyCa
         textView = findViewById(R.id.text_desc);
         textView.setText(oAlarm.getDesc());
 
+        textView = findViewById(R.id.location_text);
+        textView.setText("floor: " + oAlarm.getFloor() + ", " + "room number: " + oAlarm.getRoom_number());
+
         final String OLD_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
         final String NEW_FORMAT = "MM월 dd일 HH:mm";
 
@@ -93,6 +96,8 @@ public class AlarmViewActivity extends AppCompatActivity implements OnMapReadyCa
         Date d = null;
         try {
             d = sdf.parse(oldDateString);
+            sdf.applyPattern(NEW_FORMAT);
+            newDateString = sdf.format(d);
         } catch (ParseException e) {
             e.printStackTrace();
         }

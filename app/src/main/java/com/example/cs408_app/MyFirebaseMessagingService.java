@@ -174,8 +174,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentIntent(registerPendingIntent)
                 .setAutoCancel(true)
                 // If user click a button after expanding the notification
-                .addAction(new NotificationCompat.Action(R.drawable.common_google_signin_btn_text_dark, "Show accident", registerPendingIntent))
-                .addAction(new NotificationCompat.Action(R.drawable.common_google_signin_btn_text_dark, "Ignore", registerPendingIntent));
+                .addAction(new NotificationCompat.Action(R.drawable.common_google_signin_btn_text_dark, "Show accident", registerPendingIntent));
 
         if (near)
             // use custom mp3 sound file (./res/raw/siren.mp3)
@@ -241,6 +240,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationManager.notify(NOTIFICATION_ID /* ID of notification */, soundBuilder.build());
         else
             notificationManager.notify(NOTIFICATION_ID, silentBuilder.build());
+
 
         NOTIFICATION_ID++;
     }
